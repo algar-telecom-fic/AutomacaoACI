@@ -1,0 +1,18 @@
+---
+- hosts: local
+  vars_files:
+    - ./variaveisVars.yml
+  tasks:
+  - name: Add a new physical domain to EPG binding
+    aci_epg_to_domain:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      state: present
+      validate_certs: no
+      epg: "{{ epg }}"
+      domain: vdsAUTOMACAO
+      domain_type: vmm
+      vm_provider: vmware

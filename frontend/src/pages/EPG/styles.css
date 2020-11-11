@@ -1,0 +1,98 @@
+.logon-container {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.central {
+    background: white;
+    color: #000000;
+    height: 95%;
+    width: 60%;
+    border-radius: 30px;
+    text-align: center;
+    position: fixed;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;    
+}
+h1 {
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    
+
+}
+
+.roww{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    text-align: center;
+    padding: 2px;
+}
+
+.filho{
+    width: 250px;
+    height: 800%;
+    margin: 10px;
+    
+}
+
+
+
+
+.buttonn {
+    width: 30%;
+    height: 10%;
+    background: #777577;
+    border: 0;
+    border-radius: 8px;
+    color: #FFF;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    display: flex;
+   justify-content: center;
+   align-items: center;
+    
+}
+
+.buttonn:hover {
+    filter: brightness(90%)
+}
+
+.EPGinp{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+
+
+.test {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+
+}

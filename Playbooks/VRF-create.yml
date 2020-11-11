@@ -1,0 +1,17 @@
+---
+- hosts: local
+  vars_files:
+    - ./variaveisVars.yml
+  tasks:
+  - name: Add a new VRF to a tenant
+    aci_vrf:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      description: VRF Maidanda
+      policy_control_preference: enforced
+      policy_control_direction: ingress
+      state: present
+      validate_certs: no
+      vrf: "{{ vrf }}"

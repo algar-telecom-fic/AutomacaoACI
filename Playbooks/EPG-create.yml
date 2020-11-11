@@ -1,0 +1,19 @@
+---
+- hosts: local
+  vars_files: 
+    - ./variaveisVars.yml
+  tasks:
+  - name: Add a new EPG
+    aci_epg:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      ap: "{{ ap }}"
+      tenant: "{{ tenant }}"
+      description: "{{ description }}"
+      bd: "{{ bd }}"
+      preferred_group: no
+      state: present
+      validate_certs: no
+      epg: "{{ epg }}"
+

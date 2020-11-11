@@ -1,0 +1,21 @@
+---
+- name: Create a Bridge Domain
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: 
+    - vars.yml
+
+  tasks:
+
+  - name: Create a BD
+    aci_bd:
+      host: 10.99.9.1
+      username: igorhenrique
+      password: ansible123
+      tenant: "{{ tenant }}"
+      vrf: "{{ vrf }}"
+      bd: "{{ bd }}"
+      state: present
+      validate_certs: false
+    delegate_to: localhost

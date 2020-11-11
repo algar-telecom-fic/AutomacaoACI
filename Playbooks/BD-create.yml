@@ -1,0 +1,17 @@
+---
+- hosts: local
+  vars_files:
+    - ./variaveisVars.yml
+  tasks:
+  - name: Add Bridge Domain
+    aci_bd:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      validate_certs: false
+      state: present
+      tenant: "{{ tenant }}"
+      vrf: "{{ vrf }}"
+      l2_unknown_unicast: flood
+      arp_flooding: true
+      bd: "{{ bd }}"

@@ -1,0 +1,37 @@
+---
+- name: Query APs from ACI
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: 
+    - vars.yml
+
+  tasks:
+  - name: Query APs from ACI
+    aci_ap:
+      host: 10.99.9.1
+      username: igorhenrique
+      password: ansible123
+      validate_certs: no
+      tenant: "{{ tenant }}"
+      state: query
+    register: aps
+
+#  - name: Create a List of Just APs names using a query filter
+#    set_fact:
+#        ap_list: "{{ aps | json_query('existing[0].fvTenant.children[*].fvAp.attributes.name') }}"
+
+#  - name: PRINT LIST OF APPS IN TENANT
+#    debug:
+#      msg: "{{ item.fvTenant.children[*].fvAp.attributes.name }}"
+#    loop: "{{ ap_list }}"
+
+
+  - copy:
+      content: "{{ aps }}"
+      dest: ../querys/aci_aps.json
+    delegate_to: localhost
+
+#  - debug:
+#      msg: "{{ item.fvCtx.attributes.name }}"
+#      loop: "{{ sorted_vrfs }}"

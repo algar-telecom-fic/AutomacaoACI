@@ -1,0 +1,21 @@
+---
+- name: Create a VRF
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: 
+      - vars.yml
+
+  tasks:
+
+  - name: Create a VRF
+    aci_vrf:
+      host: 10.99.9.1
+      username: igorhenrique
+      password: ansible123
+      tenant: "{{ tenant }}"
+      vrf: "{{ vrf }}"
+      description: "{{ description }}"
+      state: present
+      validate_certs: false
+    register: create_vrf
