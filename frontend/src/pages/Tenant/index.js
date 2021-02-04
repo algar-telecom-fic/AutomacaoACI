@@ -32,34 +32,24 @@ export default function CreateTenant() {
             
                 <img className="logo" src={logo} alt="Algar logo"/>
                 
-                <h1>Network Automation Tool</h1>
-                
+                <h3>Network Automation Tool</h3>
                
                 <div className="item">
-                <form onSubmit={handleSubmit}>
-                <h2>Tenant Name:</h2> <input
-                    placeholder="Tenant Name" 
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    ></input>
-                          
-                <h2>Description:</h2> <input
-                    placeholder="Description"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                    ></input>
-                <h2>State: </h2>
-                <select
-                    value={state}
-                    onChange={e => setState(e.target.value)}
-                >
-                    <option value="present">Present</option>
-                    <option value="absent">Absent</option>
-                </select>
+                    <form onSubmit={handleSubmit}>
+                        <h5>Tenant Name:</h5> 
+                        <input placeholder="Tenant Name" value={name} onChange={e => setName(e.target.value)}/>
+                                
+                        <h5>Description:</h5> 
+                        <input placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/>
+                        <h5>State: </h5>
+                        <select value={state} onChange={e => setState(e.target.value)}>
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                        </select>
 
-                <button className="button" type="submit">Submit</button>
+                        <button className="button" type="submit">Submit</button>
 
-                </form>
+                    </form>
                 </div>
             </div>
         

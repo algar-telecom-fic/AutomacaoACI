@@ -6,21 +6,16 @@ const cors = require('cors')
 const exec = require('child_process').exec;
 
 module.exports = {
-  
-
      async listvrfs (request, response) { /* Rota que irá listar as VRFs presentes em um tenant */
       
       exec("ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_vrfs.yml", (err,std) => {
         console.log(err)
         console.log(std)
       })
-
-     
         const queryvrf = fs.readFileSync('./ansible/querys/aci_vrfs.json') //le o arquivo
         const queryvrf_vars = JSON.parse(queryvrf)
 
-
-          var names = [];
+        var names = [];
           
               // variável de controle para não pegar o mesmo id
               var containerId;
@@ -40,14 +35,6 @@ module.exports = {
                 label: c,
                 value: c,
               })); //QUERY VRFS ON TENANT FIM
-
-
           return response.json(queryvrf_formatted)
-              
-
-          
-
     },
-   
-
 }

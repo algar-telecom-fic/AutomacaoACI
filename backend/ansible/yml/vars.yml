@@ -1,8 +1,5 @@
 ---
-  epg: "UASUYAGDY"
-  description: "UYAGSUYAGD"
+  vrf: "zz-teste"
+  description: "teste"
   tenant: "ZZ-AUTOMATION-ACI"
-  vrf: "VRF_FINAL"
-  bd: "bridge123124125"
-  ap: "AUYSGDYUAGS"
 

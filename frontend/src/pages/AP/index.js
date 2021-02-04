@@ -47,44 +47,30 @@ export default function CreateAP() {
             
                 <img className="logo" src={logo} alt="Algar logo"/>
                 
-                <h1>Network Automation Tool</h1>
+                <h3>Network Automation Tool</h3>
                 
                
                 <div className="item">
-                <form onSubmit={handleSubmit}>
-                <h2>Application Profile Name:</h2> <input
-                    placeholder="AP Name" 
-                    value={ap}
-                    onChange={e => setAp(e.target.value)}
-                    ></input>
-                          
-                <h2>Description:</h2> <input
-                    placeholder="Description"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                    ></input>
-                <h2>Tenant: </h2>
+                    <form onSubmit={handleSubmit}>
+                        <h5>Application Profile Name:</h5> 
+                        <input placeholder="AP Name" value={ap} onChange={e => setAp(e.target.value)}/>
+                                
+                        <h5>Description:</h5> 
+                        <input placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/>
+                        <h5>Tenant: </h5>
 
 
-                <Select
-                    options={formatted_tn}
-                    value={tenant}
-                    onChange={e => setTenantname(e.value)}
-                    placeholder={tenant}
-                    />
+                        <Select
+                            options={formatted_tn}
+                            value={tenant}
+                            onChange={e => setTenantname(e.value)}
+                            placeholder={tenant}
+                        />
 
-                
-                    
-                    
-               
-
-                <button className="button" type="submit">Submit</button>
-
-
-                </form>
+                        <button className="button" type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
-        
         </div>
     )
 }
