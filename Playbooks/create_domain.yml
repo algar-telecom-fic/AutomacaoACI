@@ -1,0 +1,18 @@
+---
+- name: Create a Physical Domain
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: ./vars.yml
+
+  tasks:
+
+  - name: Create Physical Domain
+    aci_domain:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      domain: "{{ domain }}:Teste-Domain"
+      domain_type: phys
+      state: present
+      validate_certs: false

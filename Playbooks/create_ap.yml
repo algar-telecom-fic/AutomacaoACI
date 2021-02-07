@@ -1,0 +1,20 @@
+---
+- name: Create an Application Profile
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: ./vars.yml
+
+  tasks:
+
+  - name: Create an Application Profile
+    aci_ap:
+      host: "{{ apic }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      description: "{{ ap_descr }}"
+      state: present
+      validate_certs: false
+    register: query_result
