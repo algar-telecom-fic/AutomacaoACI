@@ -18,13 +18,10 @@ export default function CreateVRF() {
 
 
     useEffect(() => {
-
-    window.onload = function QueryTenants(){  /* Função para get de Query de tenants (VRF)*/      
         api.get('vrf').then(response => {
-        setformatted_tn(response.data)
+            setformatted_tn(response.data)
         })
-        }              
-      });
+    }, []);
     
     async function handleSubmit(e){ /*Função para post no back (TENANT) */
         e.preventDefault()
@@ -34,9 +31,15 @@ export default function CreateVRF() {
             description,
             tenant,
         }
-    console.log(data)
-    const response = await api.post('vrf' , data)
-    alert('VRF criada com sucesso!')
+        await api.post('vrf' , data).then(response => {
+            if(response.data.statusMessage){
+                alert(response.data.statusMessage);
+            }else{
+                alert(response.data.created + " " + response.data.error);
+            }
+        })
+        // console.log(response)
+        // alert('VRF criada com sucesso!')
 
     }
 

@@ -19,41 +19,19 @@ export default function CreateEPG() {
     const [ formatted_ap, setformatted_ap ] = useState('')
 
     useEffect(() => {
-        window.onload = function QueryTenants(){  /* Função para get de Query de tenants (epg)*/      
-            api.get('epg').then(response => {
-                setformatted_tn(response.data)
-            })
-        }              
-      });
-
-
-    useEffect (() => {
-        async function QueryVRF() {
-            api.get('epg/vrfs').then(response => {
-                setformatted_vrf(response.data)
-            })
-        }
-        QueryVRF()
-      }, [tenant])
-
-
-    useEffect (() => {
-        async function QueryVRF() {
-            api.get('epg/bd').then(response => {
-                setformatted_bd(response.data)
-            })
-        }
-        QueryVRF()
-    }, [tenant])
-
-      useEffect (() => {
-        async function QueryVRF() {
-            api.get('epg/ap').then(response => {
-                setformatted_ap(response.data)
-            })
-        }
-        QueryVRF()
-      }, [tenant])
+        api.get('epg').then(response => {
+            setformatted_tn(response.data)
+        })
+        api.get('epg/vrfs').then(response => {
+            setformatted_vrf(response.data)
+        })
+        api.get('epg/bd').then(response => {
+            setformatted_bd(response.data)
+        })
+        api.get('epg/ap').then(response => {
+            setformatted_ap(response.data)
+        })
+    }, [])
 
     async function handleSubmit(e){ /*Função para post no back (TENANT) */
         e.preventDefault()
@@ -67,9 +45,13 @@ export default function CreateEPG() {
             ap,
         }
         // console.log(data)
-        const response = await api.post('epg' , data)
-        alert('EPG criado com sucesso!')
-
+        await api.post('epg' , data).then(response => {
+            if(response.data.statusMessage){
+                alert(response.data.statusMessage)
+            }else{
+                alert(response.data.created + " " + response.data.error)
+            }
+        })
     }
 
     return (

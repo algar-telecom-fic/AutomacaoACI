@@ -15,16 +15,11 @@ export default function CreateAP() {
     const [ tenant, setTenantname] = useState('')
     const [ formatted_tn, setformatted_tn ] = useState('')
     
-
-
     useEffect(() => {
-
-    window.onload = function QueryTenants(){  /* Função para get de Query de tenants (VRF)*/      
         api.get('ap').then(response => {
-        setformatted_tn(response.data)
-        })
-        }              
-      });
+            setformatted_tn(response.data)
+            })
+    }, [])
     
     async function handleSubmit(e){ /*Função para post no back (TENANT) */
         e.preventDefault()
@@ -34,10 +29,13 @@ export default function CreateAP() {
             description,
             tenant,
         }
-    console.log(data)
-    const response = await api.post('ap' , data)
-    alert('Application Profile criada com sucesso!')
-
+        await api.post('ap' , data).then(response => {
+            if(response.data.statusMessage){
+                alert(response.data.statusMessage)
+            }else{
+                alert(response.data.created + " " + response.data.error)
+            }
+        })
     }
 
     return (
@@ -48,7 +46,6 @@ export default function CreateAP() {
                 <img className="logo" src={logo} alt="Algar logo"/>
                 
                 <h3>Network Automation Tool</h3>
-                
                
                 <div className="item">
                     <form onSubmit={handleSubmit}>

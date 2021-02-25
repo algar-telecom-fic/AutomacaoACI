@@ -17,28 +17,15 @@ export default function CreateBD() {
     const [ formatted_tn, setformatted_tn ] = useState('')
     const [ formatted_vrf, setformatted_vrf ] = useState('')
     
-
- 
     useEffect(() => {
-        window.onload = function QueryTenants(){  /* Função para get de Query de tenants (VRF)  */  
         api.get('vrf').then(response => {
-        setformatted_tn(response.data)
+            console.log(response)
+            setformatted_tn(response.data)
         })
-        }              
-      }
-      );
-      
-
-      useEffect (() => {
-        async function QueryVRF() {
-          
-            api.get('bd/vrfs', tenant).then(response => {
-            setformatted_vrf(response.data)})}
-            QueryVRF()
-
-      }, [tenant])
-
-
+        api.get('bd/vrfs', tenant).then(response => {
+            setformatted_vrf(response.data)
+        })
+    }, [])
     
     async function handleSubmit(e){ /*Função para post no back (TENANT) */
         e.preventDefault()
@@ -49,10 +36,13 @@ export default function CreateBD() {
             tenant,
             vrf,
         }
-    console.log(data)
-    const response = await api.post('bd' , data)
-    alert('BD criado com sucesso!')
-
+        await api.post('bd' , data).then(response => {
+            if(response.data.statusMessage){
+                alert(response.data.statusMessage)
+            }else{
+                alert(response.data.created + " " + response.data.error)
+            }
+        })
     }
 
     return (

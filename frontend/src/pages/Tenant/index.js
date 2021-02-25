@@ -20,10 +20,14 @@ export default function CreateTenant() {
             state
         }
 
-        const response = await api.post('tenant' , data)
-
-        alert('Tenant criado com sucesso!')
-
+        await api.post('tenant' , data).then(response => {
+            console.log(response)
+            if(response.data.statusMessage){
+                alert(response.data.statusMessage)
+            }else{
+                alert(response.data.created + " " + response.data.error)
+            }
+        })
     }
 
     return (

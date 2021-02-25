@@ -6,29 +6,23 @@ const cors = require('cors')
 const exec = require('child_process').exec;
 
 module.exports = {
-
-  
-
     async index (request,response) {
-
+      try {
         const VrfParm = request.body; //declara que os parametros do tenant são do corpo da requisição
-          fs.writeFileSync('./ansible/json/vars.json', JSON.stringify(VrfParm, undefined, 2)) //grava o .json recebido do front!
-          
-           
-        console.log(VrfParm) //le as informações vindas do front
-      
-      
+        
+        fs.writeFileSync('./ansible/json/vars.json', JSON.stringify(VrfParm, undefined, 2)) //grava o .json recebido do front!
+        
         exec("json2yaml ./ansible/json/vars.json > ./ansible/yml/vars.yml && ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/create_bd.yml", (err,std) => {
-          console.log(err)
-          console.log( std )
+          return response.json({created: false, error: err});
+          // console.log(err)
+          // console.log( std )
         })     
 
-          
-        return response.json('Todos os dados da VRFa foram atualizados')
+        return response.json({created: true, statusMessage: 'BD criado com sucesso.'});
+        // return response.json('Todos os dados da VRFa foram atualizados')
+      } catch (error) {
+        return response.json({created: false, error})
+      }
 
     },
-
-
-   
-
 }
