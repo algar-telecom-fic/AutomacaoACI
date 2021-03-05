@@ -65,17 +65,21 @@ export default function CreateEPG() {
                 <form onSubmit={handleSubmit}>
                     <div className="roww">
                         <div className="filho">
-                        <h5>Endpoint Group Name:</h5> <input className="EPGinp"
+                        <h5>Endpoint Group Name:</h5> 
+                        <input className="EPGinp"
                             placeholder="EPG Name" 
                             value={epg}
                             onChange={e => setEpg(e.target.value)}
-                            ></input>
+                            autoFocus
+                            required
+                        ></input>
                                 
-                        <h5>Description:</h5> <input className="EPGinp"
+                        <h5>Description:</h5> 
+                        <input className="EPGinp"
                             placeholder="Description"
                             value={description}
                             onChange={e => setDescription(e.target.value)}
-                            ></input>
+                        ></input>
                                             
                         </div>
                         <div className="filho">
@@ -84,28 +88,28 @@ export default function CreateEPG() {
                                 options={formatted_tn}
                                 value={tenant}
                                 onChange={e => setTenantname(e.value)}
-                                placeholder={tenant}
+                                placeholder="Select tenant"
                             />
                             <h5>VRF: </h5>
                             <Select
                                 options={formatted_vrf}
                                 value={vrf}
                                 onChange={e => setVrf(e.value)}
-                                placeholder={vrf}
+                                placeholder="Select VRF"
                             />
                             <h5>Bridge Domain: </h5>
                             <Select
                                 options={formatted_bd}
                                 value={bd}
                                 onChange={e => setBd(e.value)}
-                                placeholder={bd}
+                                placeholder="Select BD"
                             /> 
                                 <h5>Application Profile: </h5>
                             <Select
                                 options={formatted_ap}
                                 value={ap}
                                 onChange={e => setAp(e.value)}
-                                placeholder={ap}
+                                placeholder="Select AP"
                             />
                         </div>
                     </div>

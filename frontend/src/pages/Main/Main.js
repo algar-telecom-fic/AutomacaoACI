@@ -34,14 +34,14 @@ export default function CreateTenant() {
                 <img className="logo" src={logo} alt="Algar logo"/>
                 
                 <h3>Network Automation Tool</h3>
-                <h4 className="pb-3">Criação de Objetos</h4>
+                <h4 className="pb-3">Creating Objects</h4>
                 
                 <div className="card-columns">
                     <div className="card">
                         <Link to="/tenant">
                             <div className="card-body text-center">
                                 {/* <button>Tenant</button> */}
-                                <div className="card-text">Criar Tenant</div>
+                                <div className="card-text">Create Tenant</div>
                             </div>
                         </Link>
                     </div>
@@ -49,7 +49,7 @@ export default function CreateTenant() {
                         <Link to="/vrf">
                             <div className="card-body">
                                 {/* <button>VRF</button> */}
-                                <div className="card-text">Criar VRF</div>
+                                <div className="card-text">Create VRF</div>
                             </div>
                         </Link>
                     </div>
@@ -57,7 +57,7 @@ export default function CreateTenant() {
                         <Link to="/epg">
                             <div className="card-body">
                                 {/* <button>EPG</button> */}
-                                <div className="card-text">Criar EPG</div>
+                                <div className="card-text">Create EPG</div>
                             </div>
                         </Link>
                     </div>
@@ -65,7 +65,7 @@ export default function CreateTenant() {
                         <Link to="/bd">
                             <div className="card-body">
                                 {/* <button>BD</button> */}
-                                <div className="card-text">Criar BD</div>
+                                <div className="card-text">Create BD</div>
                             </div>
                         </Link>
                     </div>
@@ -73,7 +73,7 @@ export default function CreateTenant() {
                         <Link to="/ap">
                             <div className="card-body">
                                 {/* <button>AP</button> */}
-                                <div className="card-text">Criar AP</div>
+                                <div className="card-text">Create AP</div>
                             </div>
                         </Link>
                     </div>

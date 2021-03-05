@@ -58,7 +58,7 @@ export default function CreateBD() {
                 <div className="item">
                     <form onSubmit={handleSubmit}>
                         <h5>Bridge Domain Name:</h5> 
-                        <input placeholder="BD Name" value={bd} onChange={e => setBd(e.target.value)}/>
+                        <input placeholder="BD Name" value={bd} onChange={e => setBd(e.target.value)} autoFocus required/>
                                 
                         <h5>Description:</h5> 
                         <input placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/>
@@ -67,7 +67,7 @@ export default function CreateBD() {
                             options={formatted_tn}
                             value={tenant}
                             onChange={e => setTenantname(e.value)}                            
-                            placeholder={tenant}
+                            placeholder="Select tenant"
                         />
 
                         <h5>VRF: </h5>
@@ -75,7 +75,7 @@ export default function CreateBD() {
                             options={formatted_vrf}
                             value={vrf}
                             onChange={e => setVrf(e.value)}
-                            placeholder={vrf}
+                            placeholder="Select VRF"
                         />   
                         <button className="button" type="submit">Submit</button>
                     </form>

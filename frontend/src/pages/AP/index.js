@@ -18,7 +18,7 @@ export default function CreateAP() {
     useEffect(() => {
         api.get('ap').then(response => {
             setformatted_tn(response.data)
-            })
+        })
     }, [])
     
     async function handleSubmit(e){ /*Função para post no back (TENANT) */
@@ -50,7 +50,7 @@ export default function CreateAP() {
                 <div className="item">
                     <form onSubmit={handleSubmit}>
                         <h5>Application Profile Name:</h5> 
-                        <input placeholder="AP Name" value={ap} onChange={e => setAp(e.target.value)}/>
+                        <input placeholder="AP Name" value={ap} onChange={e => setAp(e.target.value)} autoFocus required/>
                                 
                         <h5>Description:</h5> 
                         <input placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/>
@@ -61,7 +61,7 @@ export default function CreateAP() {
                             options={formatted_tn}
                             value={tenant}
                             onChange={e => setTenantname(e.value)}
-                            placeholder={tenant}
+                            placeholder="Select tenant"
                         />
 
                         <button className="button" type="submit">Submit</button>

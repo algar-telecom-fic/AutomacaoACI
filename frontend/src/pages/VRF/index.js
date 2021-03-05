@@ -4,19 +4,13 @@ import logo from '../../img/algar-logo.png'
 import api from '../../services/api'
 import Select from 'react-select';
 
-
-
-
 export default function CreateVRF() {
-
 
     const [ vrf, setVrf] = useState('')
     const [ description, setDescription] = useState('')
     const [ tenant, setTenantname] = useState('')
     const [ formatted_tn, setformatted_tn ] = useState('')
     
-
-
     useEffect(() => {
         api.get('vrf').then(response => {
             setformatted_tn(response.data)
@@ -56,7 +50,7 @@ export default function CreateVRF() {
                 <div className="item">
                     <form onSubmit={handleSubmit}>
                         <h5>VRF Name:</h5> 
-                        <input placeholder="VRF Name" value={vrf} onChange={e => setVrf(e.target.value)}/>
+                        <input placeholder="VRF Name" value={vrf} onChange={e => setVrf(e.target.value)} autofocus required/>
                                 
                         <h5>Description:</h5> 
                         <input placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/>
@@ -66,7 +60,7 @@ export default function CreateVRF() {
                             options={formatted_tn}
                             value={tenant}
                             onChange={e => setTenantname(e.value)}
-                            placeholder={tenant}
+                            placeholder="Select tenant"
                         />
                         <button className="button" type="submit">Submit</button>
                     </form>
