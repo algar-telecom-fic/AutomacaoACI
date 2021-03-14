@@ -4,11 +4,7 @@ import logo from '../../img/algar-logo.png'
 import api from '../../services/api'
 import Select from 'react-select';
 
-
-
-
 export default function CreateAP() {
-
 
     const [ ap, setAp] = useState('')
     const [ description, setDescription] = useState('')

@@ -4,11 +4,7 @@ import logo from '../../img/algar-logo.png'
 import api from '../../services/api'
 import Select from 'react-select';
 
-
-
-
 export default function CreateBD() {
-
 
     const [ bd, setBd] = useState('')
     const [ vrf, setVrf] = useState('')
@@ -53,7 +49,6 @@ export default function CreateBD() {
                 <img className="logo" src={logo} alt="Algar logo"/>
                 
                 <h3>Network Automation Tool</h3>
-                
                
                 <div className="item">
                     <form onSubmit={handleSubmit}>

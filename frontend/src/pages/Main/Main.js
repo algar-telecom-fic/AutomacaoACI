@@ -1,31 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom';
 import './styles.css'
 import logo from '../../img/algar-logo.png'
-import api from '../../services/api'
 
 export default function CreateTenant() {
-
-    const [ name, setName] = useState('')
-    const [ description, setDescription] = useState('')
-    const [ state, setState] = useState('')
-
-    async function handleSubmit(e){
-        e.preventDefault()
-
-        const data = {
-            name,
-            description,
-            state
-        }
-
-        await api.post('tenant' , data => {
-            console.log(data)
-        })
-
-        alert('Tenant criado com sucesso!')
-
-    }
 
     return (
         <div className="logon-container">
