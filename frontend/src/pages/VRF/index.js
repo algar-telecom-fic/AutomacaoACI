@@ -25,12 +25,15 @@ export default function CreateVRF() {
             description,
             tenant,
         }
-        await api.post('vrf' , data).then(response => {
+        console.log(data)
+        await api.post('/vrf' , data).then(response => {
             if(response.data.statusMessage){
                 alert(response.data.statusMessage);
             }else{
                 alert(response.data.created + " " + response.data.error);
             }
+        }).catch(err => {
+            console.log(err)
         })
         // console.log(response)
         // alert('VRF criada com sucesso!')

@@ -9,7 +9,7 @@
 
 body {
     font: 400 14px Roboto, sans-serif;
-    background: #d1d1d1;
+    background-color: #D1D1D1;
     -webkit-font-smoothing: antialiased ;
 }
 
@@ -30,8 +30,7 @@ form input {
     color: #333;
     border: 1px solid #7e7e83;
     border-radius: 8px;
-    padding: 0 24px;
-    
+    padding: 0 24px; 
 }
 
 form select {

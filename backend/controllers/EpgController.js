@@ -5,10 +5,7 @@ const fs = require('fs')
 const cors = require('cors')
 const exec = require('child_process').exec;
 
-
-
 module.exports = {
-    
 
     async index (request,response) {
       try {
@@ -30,7 +27,6 @@ module.exports = {
       }
     },
   
-
     async listbds (request, response) { /* Rota que irá listar os BDs presentes em um tenant */
       exec("ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_bds.yml", (err,std) => {
         console.log(err)

@@ -1,0 +1,8 @@
+---
+  domain: "dominio teste"
+
+---
+  vrf: "ss"
+  description: "ss"
+  tenant: "ZZ-AUTOMATION-ACI"
+
