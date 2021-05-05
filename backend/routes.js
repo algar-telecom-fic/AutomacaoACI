@@ -1,6 +1,5 @@
 const express = require('express')
 
-const TenantController = require('./controllers/TenantController')
 const VrfController = require('./controllers/VrfController')
 const ApController = require('./controllers/ApController')
 const BdController = require('./controllers/BdController')
@@ -8,13 +7,17 @@ const EpgController = require('./controllers/EpgController')
 const QuerysTen = require('./controllers/QuerysTen')
 const QueryVrf = require('./controllers/QueryVrf')
 
+const TenantController = require('./controllers/TenantController');
+
 const DomainController = require('./controllers/DomainController');
+
+const tenantController = new TenantController();
 
 const domainController = new DomainController();
 
 const routes = express.Router()
 
-routes.post('/tenant', TenantController.index)
+routes.post('/tenant', tenantController.create);
 
 routes.get('/vrf', QuerysTen.get)
 routes.get('/ap', QuerysTen.get)

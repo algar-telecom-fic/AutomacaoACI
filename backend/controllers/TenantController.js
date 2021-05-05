@@ -1,38 +1,38 @@
 const express = require('express')
-const routes = require('../routes')
-const app = express()
+//const routes = require('../routes')
+//const app = express()
 const fs = require('fs')
-const cors = require('cors')
+//const cors = require('cors')
 const exec = require('child_process').exec;
-const json2yaml = 'sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; sudo touch ../ansible/Ansible_no_meu_lugar' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+// const json2yaml = 'sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; sudo touch ../ansible/Ansible_no_meu_lugar' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+const json2yaml = 'sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
-module.exports = {
-  async index(request,response) {
-    try {
-      const TenantParm = request.body; //declara que os parametros do tenant são do corpo da requisição
-      fs.writeFileSync('./ansible/json/vars.json', JSON.stringify(TenantParm, undefined, 2), finished) //grava o .json recebido do front!
+class TenantController{
+  async create(request, response){
+    try{
+      const {TenantParam} = request.body;
+      if(TenantParam){
+        if(!TenantParam.name || !TenantParam.description){
+          throw 'Name or Description on TenantParam does not exists';
+        }
+        fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({tenant: TenantParam.name, description: TenantParam.description}, null, 2)) //grava o .json recebido do front!
 
-      function finished(err) {
-        console.log(err)
-        console.log('all set.')
+        await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
+          if(err){
+            throw err;
+          }else{
+            runCommand(cmds, cb);
+          }
+          console.log(`stdout: ${stdout}`);
+        });
+        return response.status(200).json({createdTenant: true, statusMessage: "Tenant created successfully"});
+      }else{
+        throw 'TenantParam parameter does not exists';
       }
-
-      const data = fs.readFileSync('./ansible/json/vars.json') //le o arquivo
-      const vars = JSON.parse(data) //converte o arquivo "bruto" para json
-
-      exec(json2yaml, { /* função que executa comando no CMD */
-          cwd: __dirname
-      }, (err, stdout, stderr) => {
-        console.log(stdout);
-        if (err) console.log(err);
-        else runCommand(cmds, cb);
-      });
-
-      return response.json({created: true, statusMessage: 'Tenant criado com sucesso.'});
-      // return response.json('Todos os dados do Tenant foram atualizados')        
-    } catch (error) {
-      console.log(error)
-      return response.json({created: false, error})
+    } catch(err){
+      response.status(400).json({createdTenant: false, error: err});
     }
   }
 }
+
+module.exports = TenantController;

@@ -1,4 +1,6 @@
 .logo {
     height: 10%;
     width: 17%;
+    min-width: 10%;
+    min-height: 5%;
 }
