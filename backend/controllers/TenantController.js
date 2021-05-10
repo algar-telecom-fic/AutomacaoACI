@@ -1,10 +1,6 @@
 const express = require('express')
-//const routes = require('../routes')
-//const app = express()
 const fs = require('fs')
-//const cors = require('cors')
 const exec = require('child_process').exec;
-// const json2yaml = 'sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; sudo touch ../ansible/Ansible_no_meu_lugar' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 const json2yaml = 'sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
 class TenantController{
@@ -15,7 +11,7 @@ class TenantController{
         if(!TenantParam.name || !TenantParam.description){
           throw 'Name or Description on TenantParam does not exists';
         }
-        fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({tenant: TenantParam.name, description: TenantParam.description}, null, 2)) //grava o .json recebido do front!
+        fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({tenant: TenantParam.name, description: TenantParam.description}, null, 2)); //grava o .json recebido do front!
 
         await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
           if(err){
