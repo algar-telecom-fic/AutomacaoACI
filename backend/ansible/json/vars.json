@@ -1,4 +1,7 @@
 {
-  "tenant": "d",
-  "description": "f"
+  "VRFParam": {
+    "name": "AAsssss",
+    "description": "a",
+    "tenant": "Selecione"
+  }
 }

@@ -1,12 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import CreateTenant from './pages/Tenant'
-import CreateVRF from './pages/VRF'
+import CreateTenant from './pages/Tenant/Tenant';
 import CreateBD from './pages/BD'
 import CreateAP from './pages/AP'
 import CreateEPG from './pages/EPG'
 import Main from './pages/Main/Main';
+
+import CreateVRF from './pages/VRF/VFR';
 
 import Domain from './pages/Domain/Domain';
 

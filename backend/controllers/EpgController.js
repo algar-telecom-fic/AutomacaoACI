@@ -35,13 +35,13 @@ class EpgController {
     }
   }
 
-  async listbds (request, response) { /* Rota que irá listar os BDs presentes em um tenant */
-    await exec(queryBDBash, (err,std) => {
-      console.log(err)
-      console.log( std )
-    })
-    const queryvrf = fs.readFileSync('./ansible/querys/aci_bds.json') //le o arquivo
-    const queryvrf_vars = JSON.parse(queryvrf)
+  // async listbds (request, response) { /* Rota que irá listar os BDs presentes em um tenant */
+  //   await exec(queryBDBash, (err,std) => {
+  //     console.log(err)
+  //     console.log( std )
+  //   })
+  //   const queryvrf = fs.readFileSync('./ansible/querys/aci_bds.json') //le o arquivo
+  //   const queryvrf_vars = JSON.parse(queryvrf)
     //       var names = [];
         
     //       // variável de controle para não pegar o mesmo id
