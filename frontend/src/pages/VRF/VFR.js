@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css'
-import logo from '../../img/algar-logo.png'
 import api from '../../services/api'
 import Select from 'react-select';
 import Header from '../../components/Header/Header';
 
-export default function CreateVRF() {
+const VRF = () => {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [tenant, setTenant] = useState('Selecione');
-    // const [ vrf, setVrf] = useState('')
-    // const [ description, setDescription] = useState('')
-    // const [ tenant, setTenantname] = useState('')
-    // const [ formatted_tn, setformatted_tn ] = useState('')
+    const [tenant, setTenant] = useState();
+    const [ tenantOptions, setTenantOptions ] = useState();
     
-    // useEffect(() => {
-    //     api.get('vrf').then(response => {
-    //         setformatted_tn(response.data)
-    //     })
-    // }, []);
+    useEffect(() => {
+        getTenantVRF();
+    }, []);
+
+    async function getTenantVRF() {
+        await api.get('/vrf').then(response => {
+            if(response.data.showTenants){
+                setTenantOptions(response.data.tenants);
+            }
+        }).catch(err => {
+            alert(err.response.data.error)
+        })
+    }
     
     async function handleSubmit(event){
         event.preventDefault();
@@ -29,6 +33,7 @@ export default function CreateVRF() {
             tenant
         }
         await api.post('/VRF', {VRFParam: data}).then(response => {
+            console.log(response)
             if(response.data.createdVRF){
                 alert(response.data.statusMessage)
             }else{
@@ -38,7 +43,6 @@ export default function CreateVRF() {
             if(err.response){
                 alert(err.response.data.error)
             }
-            console.log(err);
         })
     }
 
@@ -70,15 +74,15 @@ export default function CreateVRF() {
                 <input style={{width: "50%"}} placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/>
                 <p className="h6 mt-2">Tenant:</p>
                 {/* nesse trecho temos uma caixa de seleção */}
-                <select style={{width: "50%"}} value={tenant} onChange={e => setTenant(e.target.value)}>
-                    {/* aqui serão listadas as opções para a minha caixa de seleção */}
-                    {/* no caso se trata dos tenats já criados */}
-                    <option value="present">Present</option>
-                    <option value="absent">Absent</option>
-                </select>
+                {/* <Select style={{width: "50%"}} options={tenantOptions} value={tenant} onChange={e => {setTenant(e.value); console.log(tenant)}} placeholder="Select tenant" /> */}
+                {/* aqui serão listadas as opções para a minha caixa de seleção */}
+                {/* no caso se trata dos tenats já criados */}
+                <Select className="col-sm-6 mx-auto" defaultValue={tenantOptions} options={tenantOptions} onChange={e => setTenant(e.value)} />
                 {/* com button se tem um botão para submeter o conteúdo digitado */}
                 <button className="btn d-block mx-auto mt-2 btn-secondary" style={{width: "50%"}} type="submit">Submit</button>
             </form>
         </div>
     )
 }
+
+export default VRF;

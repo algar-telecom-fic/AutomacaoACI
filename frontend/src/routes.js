@@ -2,9 +2,9 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import CreateTenant from './pages/Tenant/Tenant';
-import CreateBD from './pages/BD'
+import CreateBD from './pages/BD/BD'
 import CreateAP from './pages/AP'
-import CreateEPG from './pages/EPG'
+import CreateEPG from './pages/EPG/EPG';
 import Main from './pages/Main/Main';
 
 import CreateVRF from './pages/VRF/VFR';
