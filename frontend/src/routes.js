@@ -10,6 +10,7 @@ import Main from './pages/Main/Main';
 import CreateVRF from './pages/VRF/VFR';
 
 import Domain from './pages/Domain/Domain';
+import VlanPool from './pages/VlanPool/VlanPool';
 
 export default function Routes() {
     return (
@@ -23,6 +24,7 @@ export default function Routes() {
                 <Route path="/ap" exact component={CreateAP} />
                 
                 <Route path="/domain" exact component={Domain} />
+                <Route path="/vlanpool" exact component={VlanPool} />
             </Switch>
          </BrowserRouter>
     )

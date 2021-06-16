@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import './styles.css'
 import Header from '../../components/Header/Header';
 
-
 export default function CreateTenant() {
 
     return (
@@ -54,10 +53,24 @@ export default function CreateTenant() {
             {/* objetos fisicos */}
             <p className="h6 mt-2">Physical Objects</p>
             <div className="card-group mx-auto col-lg-6">
-                <div className="card">
+                <div className="card border">
                     <Link style={{textDecoration: "none"}} to="/domain">
                         <div className="card-body">
                             <p className="card-title">Create Domain</p>
+                        </div>
+                    </Link>
+                </div>
+                <div className="card mx-sm-2 border">
+                    <Link style={{textDecoration: "none"}} to="/vlanpool">
+                        <div className="card-body">
+                            <p className="card-title">Create VlanPool</p>
+                        </div>
+                    </Link>
+                </div>
+                <div className="card border">
+                    <Link style={{textDecoration: "none"}} to="/domain">
+                        <div className="card-body">
+                            <p className="card-title">Create AAEP</p>
                         </div>
                     </Link>
                 </div>

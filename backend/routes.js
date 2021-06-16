@@ -11,6 +11,7 @@ const ApController = require('./controllers/ApController')
 const BdController = require('./controllers/BdController')
 
 const DomainController = require('./controllers/DomainController');
+const VlanPoolController = require('./controllers/VlanPoolController');
 
 const tenantController = new TenantController();
 const epgController = new EpgController();
@@ -21,6 +22,8 @@ const apController = new ApController();
 const queryTenant = new QueryTenant();
 
 const domainController = new DomainController();
+
+const vlanPoolController = new VlanPoolController();
 
 const routes = express.Router()
 
@@ -33,6 +36,7 @@ routes.get('/epg/bd', epgController.listBds);
 routes.get('/epg/ap', epgController.listAps);
 
 routes.post('/domain', domainController.create);
+routes.post('/vlanpool', vlanPoolController.create);
 
 routes.get('/vrf', queryTenant.listTenants);
 routes.get('/ap', queryTenant.listTenants);

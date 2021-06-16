@@ -2,7 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const exec = require('child_process').exec;
 
-const json2yaml = 'json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vrf.yml' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+const json2yaml = 'json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_domain_phy.yml' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
 class DomainController {
     async create(request, response){
