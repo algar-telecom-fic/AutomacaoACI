@@ -1,5 +1,5 @@
 ---
-- name: Create a Physical Domain
+- name: Create AEP
   hosts: all
   connection: ssh
   gather_facts: no
@@ -7,12 +7,11 @@
 
   tasks:
 
-  - name: Create Physical Domain
-    aci_domain:
+  - name: Create AEP
+    aci_aep:
       host: "{{ host }}"
       username: "{{ user }}"
       password: "{{ pass }}"
-      domain: "{{ domain }}:Teste-Domain"
-      domain_type: phys
+      aep: "{{ aep }}:{{ tenant }}"
       state: present
       validate_certs: false
