@@ -1,0 +1,207 @@
+---
+- name: Create Objects inside Tenant for Combo 1
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: vars.yml
+
+  tasks:
+
+  - aci_ap:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      validate_certs: no
+      description: "{{ ap_descr }}"
+      state: present
+      ap: "{{ ap }}"
+
+  - aci_vrf:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      description: "{{ vrf_descr}}"
+      policy_control_preference: enforced
+      policy_control_direction: ingress
+      state: present
+      validate_certs: no
+      vrf: "{{ vrf }}"
+
+  - aci_bd:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      validate_certs: false
+      description: "{{ bd_descr }}"
+      state: present
+      tenant: "{{ tenant }}"
+
+  - name: Create subnet with private and shared scope
+    aci_bd_subnet:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      validate_certs: false
+      tenant: "{{ tenant }}"
+      bd: "{{ bd }}"
+      gateway: "{{ subnet }}"
+      mask: "{{ mask }}"
+      scope: [private]
+      #scope: [public, shared]
+      state: present
+
+  - aci_epg:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      description: "{{ epg_descr }}"
+      bd: "{{ bd }}"
+      preferred_group: no
+      state: present
+      validate_certs: no
+      epg: "{{ epg }}"
+
+- name: Create objects to enable physical connectivity
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: vars.yml
+
+  tasks:
+
+  - name: Create PHYSICAL DOMAIN
+    aci_domain:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      domain: "{{ domain }}"
+      domain_type: phys
+      state: present
+      validate_certs: false
+    register: create_domain
+
+  - name: Add DOMAIN to EPG binding
+    aci_epg_to_domain:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      epg: "{{ epg }}"
+      domain: "{{ domain }}"
+      domain_type: phys
+      state: present
+      validate_certs: false
+    register: epg_binding
+
+  - name: Create AEP
+    aci_aep:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      aep: "{{ aep }}"
+      state: present
+      validate_certs: false
+
+  - name: Add AEP to DOMAIN binding
+    aci_aep_to_domain:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      aep: "{{ aep }}"
+      domain: "{{ domain }}"
+      domain_type: phys
+      state: present
+      validate_certs: false
+
+  - name: Create VLAN pool
+    aci_vlan_pool:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      pool: "{{ pool }}"
+      pool_allocation_mode: "{{ pool_mode }}"
+      description: "{{ pool_descr }}"
+      state: present
+      validate_certs: false
+
+  - name: Create Range Vlan para VLAN Pool
+    aci_encap_pool_range:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      pool: "{{ pool }}"
+      pool_type: vlan
+      pool_allocation_mode: static
+      range_name: encappool_test
+      range_start: 200
+      range_end: 200
+      allocation_mode: inherit
+      state: present
+      validate_certs: false
+
+  - name: Bind DOMAIN to VLAN pool
+    aci_domain_to_vlan_pool:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      domain: "{{ domain }}"
+      domain_type: phys
+      pool: "{{ pool }}"
+      pool_allocation_mode: "{{ pool_mode }}"
+      state: present
+      validate_certs: false
+
+  - name: Create a Leaf Access Port IPG
+    aci_interface_policy_leaf_policy_group:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      lag_type: leaf
+      policy_group: "{{ ipg }}"
+      link_level_policy: "{{ link_level_policy }}"
+      lldp_policy: "{{ lldp_policy }}"
+      cdp_policy: "{{ cdp_policy }}"
+      aep: "{{ aep }}"
+      state: present
+      validate_certs: false
+
+  - name: Deploy STATIC PATH binding to EPG - PROBE238
+    aci_static_binding_to_epg:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      epg: "{{ epg }}"
+      encap_id: "{{ encap_id }}"
+      deploy_immediacy: "{{ deploy_immediacy }}"
+      interface_mode: "{{ interface_mode }}"
+      interface_type: "{{ interface_type }}"
+      pod_id: "{{ pod_id }}"
+      leafs: "{{ node_id }}"
+      interface: "{{ interface }}"
+      state: present
+      validate_certs: false
+
+  - name: Deploy STATIC PATH binding to EPG - PROBE236
+    aci_static_binding_to_epg:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      epg: "{{ epg }}"
+      encap_id: "{{ encap_id }}"
+      deploy_immediacy: "{{ deploy_immediacy }}"
+      interface_mode: "{{ interface_mode }}"
+      interface_type: "{{ interface_type }}"
+      pod_id: "{{ pod_id2 }}"
+      leafs: "{{ node_id2 }}"
+      interface: "{{ interface2 }}"
+      state: present
+      validate_certs: false

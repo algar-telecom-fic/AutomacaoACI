@@ -1,0 +1,23 @@
+---
+- name: Query a leaf_interface_profile
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: vars.yml
+
+  tasks:
+
+  - aci_access_port_to_interface_policy_leaf_profile:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      leaf_interface_profile: "{{ leaf_int_profile }}"
+      access_port_selector: Port-02
+      state: query
+      validate_certs: false
+    register: query_result
+
+  - copy:
+      content: "{{ query_result }}"
+      dest: leaf_int_profile.json
+    delegate_to: localhost

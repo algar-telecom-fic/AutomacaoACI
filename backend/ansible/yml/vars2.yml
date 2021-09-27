@@ -1,8 +1,8 @@
 ---
 # Creds
-user: teste
-pass: 123@mudar
-host: 10.99.9.1
+user: admin
+pass: C1sco12345
+host: 10.10.20.14
 
 leaf_int_profile: n9k-lf1-238-8-IntProf
 # Tenant level variables
@@ -19,7 +19,6 @@ epg_descr: EPG TESTE
 # Subnet Vars
 subnet: 192.168.230.1
 mask: 24
-
 # Global Policy Vars
 domain: TESTE:Static-Domain
 domain_descr: DOMAIN TESTE
@@ -32,8 +31,8 @@ aep_descr: AEP TESTE
 # IPG Variables
 ipg: TESTE-1G-AUTO-IPG
 link_level_policy: 100M-Auto
-lldp_policy: LLDP-Enabled
-cdp_policy: CDP-Enabled
+lldp_policy: default
+cdp_policy: default
 
 # Static Port Variables
 encap_id: 200
@@ -41,12 +40,7 @@ deploy_immediacy: immediate
 interface_mode: access
 interface_type: switch_port
 
-# Static Port 238 Variables
-pod_id: 2
-node_id: 308
-interface: '1/2'
-
 # Static Port 236 Variables
-pod_id2: 1
-node_id2: 107
-interface2: '1/48'
+pod_id: 1
+node_id: 101
+interface: '1/36'
