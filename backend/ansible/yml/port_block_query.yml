@@ -1,0 +1,24 @@
+---
+- name: Query a port block on a leaf_interface_profile
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: vars.yml
+
+  tasks:
+
+  - aci_access_port_block_to_access_port:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      leaf_interface_profile: "{{ leaf_int_profile }}"
+      access_port_selector: Port-3
+      leaf_port_blk: block2
+      state: query
+      validate_certs: false
+    register: query_result
+
+  - copy:
+      content: "{{ query_result }}"
+      dest: port_block_query.json
+    delegate_to: localhost
