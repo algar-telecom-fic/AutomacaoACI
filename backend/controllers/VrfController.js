@@ -15,9 +15,10 @@ class VRFController{
           throw 'Name, Description or Tenant on VRFParam does not exists';
         }
         fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({vrf: VRFParam.name, description: VRFParam.description, tenant: VRFParam.tenant}, null, 2)); //grava o .json recebido do front!
+        
         await exec(createVFRBash, {cwd: __dirname}, (err, stdout, stderr) => {
           if(err){
-            throw err;
+            console.log(err);
           }else{
             runCommand(cmds, cb);
           }

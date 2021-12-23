@@ -1,5 +1,5 @@
 ---
-- name: Create a Domain
+- name: Create AEP
   hosts: all
   connection: ssh
   gather_facts: no
@@ -7,13 +7,11 @@
 
   tasks:
 
-  - name: Create a Domain
-    aci_domain:
+  - name: Create AEP
+    aci_aep:
       host: "{{ host }}"
       username: "{{ user }}"
       password: "{{ pass }}"
-      domain: "{{ domain }}"
-      domain_type: phys
+      aep: "{{ aep }}:Teste-aep"
       state: present
       validate_certs: false
-    register: query_result

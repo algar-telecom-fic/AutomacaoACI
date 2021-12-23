@@ -1,5 +1,4 @@
 {
-  "ap": "ss",
-  "description": "ssss",
-  "tenant": "ZZ-AUTOMATION-ACI"
+  "tenant": "teste",
+  "tenant_descr": "teste"
 }

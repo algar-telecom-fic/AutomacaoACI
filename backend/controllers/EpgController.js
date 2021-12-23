@@ -56,7 +56,7 @@ class EpgController {
         if(containerId != id){
           // redefine o valor da variável com o valor atual
           containerId = id;
-          // adiciona as names à array
+          // adiciona as names ao array
           names.push(queryvrf_vars.current[0].fvTenant.children[i].fvBD.attributes.name);
         }
       }

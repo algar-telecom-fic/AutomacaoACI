@@ -29,6 +29,35 @@ class TenantController{
       response.status(400).json({createdTenant: false, error: err});
     }
   }
+  async createTenant(TenantParam){
+    try{
+      console.log(1)
+      console.log(TenantParam)
+      console.log(TenantParam.name)
+      console.log(TenantParam.description)
+      if(TenantParam){
+        if(TenantParam.name || TenantParam.description){
+          fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({tenant: TenantParam.name, tenant_descr: TenantParam.description}, null, 2)); //grava o .json recebido do front!
+
+          await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
+            if(err){
+              throw err;
+            }else{
+              runCommand(cmds, cb);
+            }
+            console.log(`stdout: ${stdout}`);
+          });
+          return "Tenant created successfully";
+        }else{
+          throw 'Name or Description on TenantParam does not exists';
+        }
+      }else{
+        throw 'TenantParam parameter does not exists';
+      }
+    }catch(err){
+      return err;
+    }
+  }
 }
 
 module.exports = TenantController;

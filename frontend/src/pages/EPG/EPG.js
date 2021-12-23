@@ -57,7 +57,7 @@ const EPG = () => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status == 404){
+                if(err.response.status === 404){
                     alert("Tenants not found!");
                 }else{
                     alert(String(err.response.data.error))
@@ -75,7 +75,7 @@ const EPG = () => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status == 404){
+                if(err.response.status === 404){
                     alert("VRFs not found!");
                 }else{
                     alert(String(err.response.data.error))
@@ -93,7 +93,7 @@ const EPG = () => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status == 404){
+                if(err.response.status === 404){
                     alert("BDs not found!");
                 }else{
                     alert(String(err.response.data.error))
@@ -110,7 +110,7 @@ const EPG = () => {
                 setApOptions(response.data.aps);
             }
         }).catch(err => {
-            if(err.response.status == 404){
+            if(err.response.status === 404){
                 alert("APs not found!");
             }else{
                 alert(String(err.response.data.error))

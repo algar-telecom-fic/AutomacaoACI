@@ -68,7 +68,7 @@ export default function CreateTenant() {
                     </Link>
                 </div>
                 <div className="card border">
-                    <Link style={{textDecoration: "none"}} to="/domain">
+                    <Link style={{textDecoration: "none"}} to="/aaep">
                         <div className="card-body">
                             <p className="card-title">Create AAEP</p>
                         </div>

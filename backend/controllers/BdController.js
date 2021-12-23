@@ -17,7 +17,7 @@ class BD {
         // vrf: "{{ vrf }}"
         // bd: "{{ bd }}"
         exec(createDBBash, (err,std) => {
-          return response.json({created: false, error: err});
+          return response.json({createdBD: false, error: err});
           // console.log(err)
           // console.log( std )
         });

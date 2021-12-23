@@ -27,7 +27,7 @@ const BD = () => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status == 404){
+                if(err.response.status === 404){
                     alert("Tenants not found!");
                 }else{
                     alert(String(err.response.data.error))
@@ -45,7 +45,7 @@ const BD = () => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status == 404){
+                if(err.response.status === 404){
                     alert("Tenants not found!");
                 }else{
                     alert(String(err.response.data.error))
