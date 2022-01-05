@@ -12,6 +12,9 @@ import CreateVRF from './pages/VRF/VFR';
 import Domain from './pages/Domain/Domain';
 import VlanPool from './pages/VlanPool/VlanPool';
 import Aaep from './pages/Aaep/Aaep';
+import BDSubnet from './pages/BDSubnet/BDSubnet';
+
+import Combos from './pages/Combo/Combos';
 
 export default function Routes() {
     return (
@@ -27,6 +30,9 @@ export default function Routes() {
                 <Route path="/domain" exact component={Domain} />
                 <Route path="/vlanpool" exact component={VlanPool} />
                 <Route path="/aaep" exact component={Aaep} />
+                <Route path="/bdsubnet" exact component={BDSubnet} />
+
+                <Route path="/combos" exact component={Combos} />
             </Switch>
          </BrowserRouter>
     )

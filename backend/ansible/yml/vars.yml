@@ -1,2 +1,4 @@
-tenant_descr: teste
-tenant: teste
+gateway: aa
+mask: a
+tenant: ZZ-AUTOMATION-ACI
+bd: a

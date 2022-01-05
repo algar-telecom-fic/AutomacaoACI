@@ -4,16 +4,21 @@ import api from '../../services/api'
 import Select from 'react-select';
 import Header from '../../components/Header/Header';
 
-const VRF = () => {
+const VRF = (props) => {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [tenant, setTenant] = useState();
     const [ tenantOptions, setTenantOptions ] = useState();
     
+    const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
+
     useEffect(() => {
+        if(props.header){
+            setStyle("row pb-5 px-sm-5 m-auto bg-light rounded text-center");
+        }
         getTenantVRF();
-    }, []);
+    }, [props.header]);
 
     async function getTenantVRF() {
         await api.get('/vrf').then(response => {
@@ -56,9 +61,15 @@ const VRF = () => {
         // bg-light - cor do padding
         // rounded - 
         // text-center - centralizar o texto no meio da página
-        <div className="row m-5 pb-5 px-5 bg-light rounded text-center">
+        <div className={getStyle}>
             {/* o header está sendo utilizado para identificar o titulo da página indicando o objeto em questão */}
-            <Header title="Create VRF"/>
+            {props.header
+            ?
+            <div className="h5">VRF</div>
+
+            :   
+                <Header title="Create VRF"/>
+            }
             {/* com o form se tem um formulário para coletar as informações que o usuário deseja */}
             {/* com o onSubmit temos a ação de submissão do formulário */}
             <form onSubmit={handleSubmit}>

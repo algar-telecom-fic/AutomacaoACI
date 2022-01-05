@@ -5,16 +5,21 @@ import Select from 'react-select';
 
 // import './styles.css';
 
-const AP = () => {
+const AP = (props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     
     const [tenant, setTenant] = useState('');
     const [tenantVrfOptions, setTenantVrfOptions] = useState('');
 
+    const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
+
     useEffect(() => {
+        if(props.header){
+            setStyle("row pb-5 px-sm-5 m-auto bg-light rounded text-center");
+        }
         getTenant();
-    }, [])
+    }, [props.header])
 
     async function getTenant(){
         await api.get('/ap').then(response => {
@@ -23,7 +28,7 @@ const AP = () => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status == 404){
+                if(err.response.status === 404){
                     alert("Tenants not found!");
                 }else{
                     alert(String(err.response.data.error))
@@ -54,10 +59,17 @@ const AP = () => {
     }
 
     return (
-        <div className="row m-5 pb-5 px-5 bg-light rounded text-center">
-            <Header title="Create BD"/>
-            <form className="row px-5 d-flex justify-content-center" onSubmit={handleSubmit}>
-                <div className="col-md-6">
+        <div className={getStyle}>
+            {props.header
+            ?
+            <div className="h5">AP</div>
+
+            :   
+                <Header title="Create AP"/>
+            }
+            
+            <form onSubmit={handleSubmit}>
+                <div className="col-md-6 mx-auto">
                     <p className="h6">AP Name:</p> 
                     <input className="col-sm-12 mx-auto" style={{"minWidth": "50px"}} placeholder="AP Name" value={name} onChange={e => setName(e.target.value)}/>
 

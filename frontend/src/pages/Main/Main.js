@@ -8,7 +8,7 @@ export default function CreateTenant() {
     return (
         <div className="row m-sm-5 pb-5 px-md-5 bg-light rounded text-center" style={{minWidth: "174px"}}>
             {/* o header está sendo utilizado para identificar o titulo da página indicando o objeto em questão */}
-            <Header title="Main Page"/>
+            <Header title="Home Page"/>
             
             <p className="h5">Creating Objects</p>
             {/* Objetos logicos */}
@@ -67,10 +67,17 @@ export default function CreateTenant() {
                         </div>
                     </Link>
                 </div>
-                <div className="card border">
+                <div className="card me-sm-2 border">
                     <Link style={{textDecoration: "none"}} to="/aaep">
                         <div className="card-body">
                             <p className="card-title">Create AAEP</p>
+                        </div>
+                    </Link>
+                </div>
+                <div className="card border">
+                    <Link style={{textDecoration: "none"}} to="/combos">
+                        <div className="card-body">
+                            <p className="card-title">COMBO</p>
                         </div>
                     </Link>
                 </div>

@@ -7,6 +7,10 @@ const json2yaml = 'json2yaml ./ansible/json/vars.json > ./ansible/yml/vars.yml &
 const TenantController = require('./TenantController');
 
 class ComboController {
+  async getCombo01(request, response){
+    return response.status(200).json({combo: true, length: 6});
+  }
+
   async combo01(request, response){
     try {
       const {comboData} = request.body;

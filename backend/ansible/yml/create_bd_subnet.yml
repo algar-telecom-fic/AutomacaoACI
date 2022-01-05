@@ -1,0 +1,23 @@
+---
+- name: Create a BD Subnet
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: ./vars.yml
+
+  tasks:
+
+  - name: Create subnet with private and shared scope
+    aci_bd_subnet:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      validate_certs: false
+      tenant: "{{ tenant }}"
+      bd: "{{ bd }}"
+      gateway: "{{ subnet }}"
+      mask: "{{ mask }}"
+      scope: [private, shared]
+      #scope: [public, shared]
+      state: present
+      

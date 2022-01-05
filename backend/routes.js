@@ -13,6 +13,7 @@ const BdController = require('./controllers/BdController')
 const DomainController = require('./controllers/DomainController');
 const VlanPoolController = require('./controllers/VlanPoolController');
 const AaepController = require('./controllers/AaepController');
+const BdSubnetController = require('./controllers/BdSubnetController');
 
 const ComboController = require('./controllers/ComboController');
 
@@ -27,6 +28,7 @@ const queryTenant = new QueryTenant();
 const domainController = new DomainController();
 const vlanPoolController = new VlanPoolController();
 const aaepController = new AaepController();
+const bdSubnetController = new BdSubnetController();
 
 const comboController = new ComboController();
 
@@ -43,8 +45,11 @@ routes.get('/epg/ap', epgController.listAps);
 routes.post('/domain', domainController.create);
 routes.post('/vlanpool', vlanPoolController.create);
 routes.post('/aaep', aaepController.create);
+routes.post('/bdsubnet', bdSubnetController.create);
 
 routes.post('/combo/01', comboController.combo01);
+
+routes.get('/combo/01', comboController.getCombo01);
 
 routes.get('/vrf', queryTenant.listTenants);
 routes.get('/ap', queryTenant.listTenants);

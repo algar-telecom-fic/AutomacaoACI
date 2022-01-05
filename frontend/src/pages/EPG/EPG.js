@@ -4,14 +4,7 @@ import api from '../../services/api'
 import Select from 'react-select';
 import Header from '../../components/Header/Header';
 
-const EPG = () => {
-
-    // const [ epg, setEpg] = useState('')
-    // const [ vrf, setVrf] = useState('')
-    // const [ bd, setBd] = useState('')
-    // const [ ap, setAp] = useState('')
-    // const [ description, setDescription] = useState('')
-    // const [ tenant, setTenantname] = useState('')
+const EPG = (props) => {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -25,30 +18,17 @@ const EPG = () => {
     const [ bdOptions, setBdOptions ] = useState();
     const [ apOptions, setApOptions ] = useState();
 
-    // const [ formatted_tn, setformatted_tn ] = useState('')
-    // const [ formatted_vrf, setformatted_vrf ] = useState('')
-    // const [ formatted_bd, setformatted_bd ] = useState('')
-    // const [ formatted_ap, setformatted_ap ] = useState('')
+    const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
 
     useEffect(() => {
+        if(props.header){
+            setStyle("row pb-5 px-sm-5 m-auto bg-light rounded text-center");
+        }
         getTenantEPG();
         getVrfEPG();
         getBdEPG();
         getApEPG();
-        // api.get('epg').then(response => {
-        //     console.log(response)
-        //     setTenantOptions(response.data)
-        // })
-        // api.get('epg/vrfs').then(response => {
-        //     setVrfOptions(response.data)
-        // })
-        // api.get('epg/bd').then(response => {
-        //     setBdOptions(response.data)
-        // })
-        // api.get('epg/ap').then(response => {
-        //     setApOptions(response.data)
-        // })
-    }, [])
+    }, [props.header])
 
     async function getTenantEPG() {
         await api.get('/epg').then(response => {
@@ -118,29 +98,6 @@ const EPG = () => {
         })
     }
 
-
-
-    // async function handleSubmit(e){ /*Função para post no back (TENANT) */
-    //     e.preventDefault()
-
-    //     const data = {
-    //         epg,
-    //         description,
-    //         tenant,
-    //         vrf,
-    //         bd,
-    //         ap,
-    //     }
-    //     // console.log(data)
-    //     await api.post('epg' , data).then(response => {
-    //         if(response.data.statusMessage){
-    //             alert(response.data.statusMessage)
-    //         }else{
-    //             alert(response.data.created + " " + response.data.error)
-    //         }
-    //     })
-    // }
-
     async function handleSubmit(event){
         event.preventDefault();
         const data = {
@@ -164,9 +121,14 @@ const EPG = () => {
 
     return (
         
-        <div className="row m-5 pb-5 px-5 bg-light rounded text-center">
+        <div className={getStyle}>
             {/* o header está sendo utilizado para identificar o titulo da página indicando o objeto em questão */}
-            <Header title="Create EPG"/>
+            {props.header
+            ?
+                <div className="h5">EPG</div>
+            :   
+                <Header title="Create EPG"/>
+            }
             {/* com o form se tem um formulário para coletar as informações que o usuário deseja */}
             {/* com o onSubmit temos a ação de submissão do formulário */}
             <form className="row px-5" onSubmit={handleSubmit}>

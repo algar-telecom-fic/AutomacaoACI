@@ -5,7 +5,7 @@ import Select from 'react-select';
 
 // import './styles.css';
 
-const BD = () => {
+const BD = (props) => {
     const [name, setName] = useState('');
     // const [description, setDescription] = useState('');
     
@@ -15,10 +15,15 @@ const BD = () => {
     const [ tenantVrfOptions, setTenantVrfOptions ] = useState();
     const [ vrfOptions, setVrfOptions ] = useState();
 
+    const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
+
     useEffect(() => {
+        if(props.header){
+            setStyle("row pb-5 px-sm-5 m-auto bg-light rounded text-center");
+        }
         getTenantVrf();
         getVrfBd();
-    }, [])
+    }, [props.header])
 
     async function getTenantVrf(){
         await api.get('/vrf').then(response => {
@@ -76,10 +81,15 @@ const BD = () => {
     }
 
     return (
-        <div className="row m-5 pb-5 px-5 bg-light rounded text-center">
-            <Header title="Create BD"/>
-            <form className="row px-5 d-flex justify-content-center" onSubmit={handleSubmit}>
-                <div className="col-md-6">
+        <div className={getStyle}>
+            {props.header
+            ?
+                <div className="h5">BD</div>
+            :   
+                <Header title="Create BD"/>
+            }
+            <form onSubmit={handleSubmit}>
+                <div className="col-md-6 mx-auto">
                     <p className="h6">BD Name:</p> 
                     <input className="col-sm-12 mx-auto" style={{"minWidth": "50px"}} placeholder="BD Name" value={name} onChange={e => setName(e.target.value)}/>
 
