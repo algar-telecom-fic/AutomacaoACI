@@ -8,7 +8,9 @@ import 'primeicons/primeicons.css';
 
 function App() {
   return (
-    <Routes />
+    <>
+      <Routes />
+    </>
   );
 }
 

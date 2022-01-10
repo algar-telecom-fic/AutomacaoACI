@@ -82,6 +82,12 @@ const Header = (props) => {
 
             ]
         },
+        {
+            label: 'Combos',
+            command: () => {
+                history.push('/combo');
+            },
+        },
     ];
 
     const endMenuBar = <img style={{minWidth: "90px", minHeight: "25px"}} alt="Algar Logo" src={AlgarLogo} height="40"></img>

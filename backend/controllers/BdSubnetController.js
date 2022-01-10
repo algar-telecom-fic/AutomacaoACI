@@ -14,7 +14,7 @@ class BdSubnetController {
                 await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
                     if (err){
                         const merged = {err, stdout}
-                        response.status(400).json({createdBdSubnet: false, error: merged});
+                        return response.status(400).json({createdBdSubnet: false, error: merged});
                     }else{
                         runCommand(cmds, cb);
                         return response.status(200).json({createdBdSubnet: true, statusMessage: "BD Subnet created successfully"});

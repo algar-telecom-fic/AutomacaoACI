@@ -1,6 +1,4 @@
 {
-  "tenant": "ZZ-AUTOMATION-ACI",
-  "bd": "a",
-  "gateway": "aa",
-  "mask": "a"
+  "tenant": "dccc",
+  "description": "cccc"
 }

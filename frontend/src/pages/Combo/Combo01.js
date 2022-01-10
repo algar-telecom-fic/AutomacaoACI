@@ -14,7 +14,7 @@ import EPG from '../EPG/EPG';
 
 const Domain = () => {
     const [getComboSize, setComboSize] = useState(0);
-    const [getPage, setPage] = useState(0);
+    const [getPage, setPage] = useState(1);
     const [getPageProportional, setPageProportional] = useState(0);
     const [getSelectedCombo, setSelectedCombo] = useState(null);
 
@@ -67,40 +67,25 @@ const Domain = () => {
         <div className="row m-5 pb-5 px-5 bg-light rounded text-center">
             <Header title="Combos"/>
 
-
-            {getPage === 0
+            {getPage === 1
                 ?
-                    <>
-                        <DataTable className="mx-auto" style={{"width": "50%"}} metaKeySelection={false} value={comboTypes} responsiveLayout="scroll" selectionMode="single" selection={getSelectedCombo} onSelectionChange={e => setSelectedCombo(e.value)} dataKey="id">
-                            <Column field="id" header="Index"></Column>
-                            <Column field="name" header="Code"></Column>
-                            <Column field="type" header="Objects"></Column>
-                        </DataTable>
-                        <br></br>
-                        <div className="d-flex p-0 mx-auto mt-2" style={{"width": "50%"}}>
-                            <button className="btn d-block btn-success mx-auto mt-2" style={{"width": "50%"}} onClick={confirmStart}>Start</button>
-                        </div>
-                    </>
-                : getPage === 1
+                    <Tenant header={true}/>
+                : getPage === 2
                     ?
-                        <Tenant header={true}/>
-                    : getPage === 2
-                        ?
-                            <AP header={true}/>
-                        : getPage === 3
-                            ?  
-                                <VRF header={true}/>
-                            : getPage === 4
-                                ? <BD header={true}/>
-                                : getPage === 5
-                                    ? <BDSubnet header={true}/>
-                                    : getPage === 6
-                                        ? <EPG header={true}/>
-                                        : 
-                                            <>
-                                                <div className="h3">Combo 01 Executed</div>
-                                            </>
-                            
+                        <AP header={true}/>
+                    : getPage === 3
+                        ?  
+                            <VRF header={true}/>
+                        : getPage === 4
+                            ? <BD header={true}/>
+                            : getPage === 5
+                                ? <BDSubnet header={true}/>
+                                : getPage === 6
+                                    ? <EPG header={true}/>
+                                    : 
+                                        <>
+                                            <div className="h3">Combo 01 Executed</div>
+                                        </>       
             }
             
             <br></br>

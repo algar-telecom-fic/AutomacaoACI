@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 
 import CreateTenant from './pages/Tenant/Tenant';
 import CreateBD from './pages/BD/BD'
@@ -14,7 +14,10 @@ import VlanPool from './pages/VlanPool/VlanPool';
 import Aaep from './pages/Aaep/Aaep';
 import BDSubnet from './pages/BDSubnet/BDSubnet';
 
-import Combos from './pages/Combo/Combos';
+import Combo from './pages/Combo/Combo';
+import Combo01 from './pages/Combo/Combo01';
+
+import NotFound from './pages/NotFound/NotFound';
 
 export default function Routes() {
     return (
@@ -32,7 +35,10 @@ export default function Routes() {
                 <Route path="/aaep" exact component={Aaep} />
                 <Route path="/bdsubnet" exact component={BDSubnet} />
 
-                <Route path="/combos" exact component={Combos} />
+                <Route path="/combo" exact component={Combo} />
+                <Route path="/combo/01" exact component={Combo01} />
+                <Route path="/404" component={NotFound}/>
+                <Redirect to="/404"/>
             </Switch>
          </BrowserRouter>
     )

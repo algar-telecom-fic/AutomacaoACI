@@ -53,7 +53,7 @@ h1 {
 .card{
     transition: .2s ease;
     text-decoration: none;
-    background-color: #f0f0f0;
+    background-color: #bfbfbf;
 }
 
 .card-text{
