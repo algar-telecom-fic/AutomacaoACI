@@ -15,8 +15,8 @@ const Domain = () => {
                 alert(response.data.createdAaep)
             }
         }).catch(err => {
-            console.log(err)
-            alert(err.response.data.error + "!")
+            console.log(err.response.data.error)
+            alert(err.response.data.error.stdout + "!")
         })
     }
 

@@ -50,11 +50,8 @@ const BD = (props) => {
             }
         }).catch(err => {
             if(err.response){
-                if(err.response.status === 404){
-                    alert("Tenants not found!");
-                }else{
-                    alert(String(err.response.data.error))
-                }
+                console.log(err.response.data.error)
+                alert(err.response.data.error.stdout + "!")
             }else{
                 alert(String("ERROR!"));
             }
@@ -76,7 +73,8 @@ const BD = (props) => {
                 alert(response.data.createdBD)
             }
         }).catch(err => {
-            alert(err.response.data.error)
+            console.log(err.response.data.error)
+            alert(err.response.data.error.stdout + "!")
         })
     }
 

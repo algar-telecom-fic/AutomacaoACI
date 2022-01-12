@@ -13,13 +13,14 @@ class DomainController {
 
                 await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
                     if (err){
-                      console.log(err)
+                        const merged = {err, stdout}
+                        return response.status(400).json({createdDomain: false, error: merged});
                     }else{
-                      runCommand(cmds, cb);
+                        runCommand(cmds, cb);
+                        return response.status(200).json({createdDomain: true, statusMessage: "Domain created successfully"});
                     }
-                    console.log(`stdout: ${stdout}`);
                 });
-                return response.status(200).json({createdDomain: true, statusMessage: "Domain created successfully"});
+
             }else{
                 throw 'Domain parameter does not exists';
             }

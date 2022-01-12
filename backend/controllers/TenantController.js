@@ -15,13 +15,13 @@ class TenantController{
 
         await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
           if(err){
-            throw err;
+            const merged = {err, stdout}
+            response.status(400).json({createdTenant: false, error: merged});
           }else{
             runCommand(cmds, cb);
+            return response.status(200).json({createdTenant: true, statusMessage: "Tenant created successfully"});
           }
-          console.log(`stdout: ${stdout}`);
         });
-        return response.status(200).json({createdTenant: true, statusMessage: "Tenant created successfully"});
       }else{
         throw 'TenantParam parameter does not exists';
       }

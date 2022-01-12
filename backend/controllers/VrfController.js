@@ -17,14 +17,14 @@ class VRFController{
         fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({vrf: VRFParam.name, description: VRFParam.description, tenant: VRFParam.tenant}, null, 2)); //grava o .json recebido do front!
         
         await exec(createVFRBash, {cwd: __dirname}, (err, stdout, stderr) => {
-          if(err){
-            console.log(err);
+          if (err){
+              const merged = {err, stdout}
+              return response.status(400).json({createdDomain: false, error: merged});
           }else{
-            runCommand(cmds, cb);
-          }
-          console.log(`stdout: ${stdout}`);
-        });
-        return response.status(200).json({createdVRF: true, statusMessage: "VRF created successfully"});
+              runCommand(cmds, cb);
+              return response.status(200).json({createdVRF: true, statusMessage: "VRF created successfully"});
+            }
+      });
       }else{
         throw 'VRFParam parameter does not exists';
       }

@@ -17,6 +17,8 @@ import BDSubnet from './pages/BDSubnet/BDSubnet';
 import Combo from './pages/Combo/Combo';
 import Combo01 from './pages/Combo/Combo01';
 
+import SwProfile from './pages/SwitchProfile/SwitchProfile';
+
 import NotFound from './pages/NotFound/NotFound';
 
 export default function Routes() {
@@ -37,6 +39,9 @@ export default function Routes() {
 
                 <Route path="/combo" exact component={Combo} />
                 <Route path="/combo/01" exact component={Combo01} />
+                
+                <Route path="/swprofile" exact component={SwProfile} />
+                
                 <Route path="/404" component={NotFound}/>
                 <Redirect to="/404"/>
             </Switch>

@@ -14,8 +14,8 @@ const Domain = () => {
                 alert(response.data.createdVlanPool)
             }
         }).catch(err => {
-            console.log(err)
-            alert(err.response.data.error + "1")
+            console.log(err.response.data.error)
+            alert(err.response.data.error.stdout + "!")
         })
     }
 

@@ -115,7 +115,8 @@ const EPG = (props) => {
                 alert(response.data.createdEPG)
             }
         }).catch(err => {
-            alert(err.response.data.error)
+            console.log(err.response.data.error)
+            alert(err.response.data.error.stdout + "!")
         })
     }
 

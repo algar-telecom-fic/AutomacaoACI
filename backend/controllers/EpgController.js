@@ -20,15 +20,17 @@ class EpgController {
             epg: EPGParam.epgName,
             bd: EPGParam.bd
           }, null, 2)); //grava o .json recebido do front!
+
         await exec(createEPGBash, {cwd: __dirname}, (err, stdout, stderr) => {
-          if(err){
-            throw err;
+          if (err){
+              const merged = {err, stdout}
+              return response.status(400).json({createdEPG: false, error: merged});
           }else{
-            runCommand(cmds, cb);
-          }
-          console.log(`stdout: ${stdout}`);
-        });
-        return response.status(200).json({createdEPG: true, statusMessage: "EPG created successfully"});
+              runCommand(cmds, cb);
+              return response.status(200).json({createdEPG: true, statusMessage: "EPG created successfully"});
+            }
+      });
+
       }else{
         throw 'EPGParam parameter does not exists';
       }

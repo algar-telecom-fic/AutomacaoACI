@@ -42,11 +42,10 @@ const BDSubnet = (props) => {
     async function handleSubmit(event){
         event.preventDefault();
         await api.post('/bdsubnet', {tenant: getTenant, bd: getBD, gateway: getGateway, mask: getMask}).then(response => {
-            console.log(response)
             if(response.data.createdBdSubnet){
                 alert(response.data.statusMessage)
             }else{
-                alert(response.data.createdAaep)
+                alert(response.data.createdBdSubnet)
             }
         }).catch(err => {
             console.log(err.response.data.error)

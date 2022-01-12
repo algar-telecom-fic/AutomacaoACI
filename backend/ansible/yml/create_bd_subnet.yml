@@ -12,7 +12,6 @@
       host: "{{ host }}"
       username: "{{ user }}"
       password: "{{ pass }}"
-      validate_certs: false
       tenant: "{{ tenant }}"
       bd: "{{ bd }}"
       gateway: "{{ subnet }}"
@@ -20,4 +19,4 @@
       scope: [private, shared]
       #scope: [public, shared]
       state: present
-      
+      validate_certs: false

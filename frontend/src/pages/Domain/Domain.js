@@ -16,7 +16,8 @@ const Domain = () => {
                 alert(response.data.createdDomain)
             }
         }).catch(err => {
-            alert(err.response.data.error)
+            console.log(err.response.data.error)
+            alert(err.response.data.error.stdout + "!")
         })
     }
 

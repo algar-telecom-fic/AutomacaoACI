@@ -46,7 +46,8 @@ const VRF = (props) => {
             }
         }).catch(err => {
             if(err.response){
-                alert(err.response.data.error)
+                console.log(err.response.data.error)
+                alert(err.response.data.error.stdout + "!")
             }
         })
     }

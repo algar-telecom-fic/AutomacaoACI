@@ -2,7 +2,8 @@ const express = require('express')
 const fs = require('fs')
 const exec = require('child_process').exec;
 
-const json2yaml = 'json2yaml ./ansible/json/vars.json > ./ansible/yml/vars.yml && ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/create_vlanpool.yml'; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+const json2yaml = 'sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vlanpool.yml' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+
      
 class VlanPoolController {
     // async create(request,response) {
@@ -35,15 +36,14 @@ class VlanPoolController {
       if(vlanpool){
         fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({pool: vlanpool}, undefined, 2)) //grava o .json recebido do front!
 
-        await exec(json2yaml, (err,std) => {
-          if (err){
-            console.log(err)
-            // throw "Connection error!" + err;
+        await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
+          if(err){
+            const merged = {err, stdout}
+            response.status(400).json({createdVlanPool: false, error: merged});
           }else{
             runCommand(cmds, cb);
+            return response.status(200).json({createdVlanPool: true, statusMessage: "VlanPool created successfully."});
           }
-          console.log(`stdout: ${std}`);
-          return response.status(200).json({createdVlanPool: true, statusMessage: "VlanPool created successfully."});
         });
       }else{
         throw 'VlanPool parameter does not exists';

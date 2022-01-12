@@ -53,7 +53,9 @@ const AP = (props) => {
                 alert(response.data.createdAP)
             }
         }).catch(err => {
-            alert(err.response.data.createdAP)
+            console.log(err.response.data.error)
+            alert(err.response.data.error.stdout + "!")
+            // alert(err.response.data.createdAP)
             // alert(err.response.data.error)
         })
     }

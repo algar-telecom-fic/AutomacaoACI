@@ -79,6 +79,12 @@ const Header = (props) => {
                         history.push('/aaep');
                     }
                 },
+                {
+                    label: 'Switch Profile',
+                    command: () => {
+                        history.push('/swprofile');
+                    }
+                },
 
             ]
         },
