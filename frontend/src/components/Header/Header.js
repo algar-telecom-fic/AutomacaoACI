@@ -85,6 +85,12 @@ const Header = (props) => {
                         history.push('/swprofile');
                     }
                 },
+                {
+                    label: 'Leaf Profile',
+                    command: () => {
+                        history.push('/leafprof');
+                    }
+                },
 
             ]
         },

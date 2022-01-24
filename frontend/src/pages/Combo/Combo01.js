@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header/Header';
 import api from '../../services/api';
 import { ProgressBar } from 'primereact/progressbar';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+
 
 import Tenant from '../Tenant/Tenant';
 import AP from '../AP/AP';
@@ -16,7 +15,6 @@ const Domain = () => {
     const [getComboSize, setComboSize] = useState(0);
     const [getPage, setPage] = useState(1);
     const [getPageProportional, setPageProportional] = useState(0);
-    const [getSelectedCombo, setSelectedCombo] = useState(null);
 
     useEffect(() => {
         setPageProportional(((getPage - 1) / getComboSize) * 100);
@@ -36,32 +34,6 @@ const Domain = () => {
             console.log(err)
         })
     }
-
-    function confirmStart(){
-        if(!getSelectedCombo){
-            alert("Select a Combo!");
-            return;
-        }
-        if(window.confirm("Do you want to start with " + getSelectedCombo.name + "?")){
-            setPage(1)
-        }else{
-            alert("Operation canceled!");
-        }
-    }
-
-    const comboTypes = [
-        {
-            "id": 0,
-            "name": "Combo 01",
-            "type": "Tenant, AP, VRF, BD, BD_Subnet, EPG"  
-        },
-        {
-            "id": 1,
-            "name": "Combo 02",
-            "type": "cassasdsa"  
-        },
-    ]
-
     
     return (
         <div className="row m-5 pb-5 px-5 bg-light rounded text-center">

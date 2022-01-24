@@ -21,7 +21,7 @@ const VRF = (props) => {
     }, [props.header]);
 
     async function getTenantVRF() {
-        await api.get('/vrf').then(response => {
+        await api.get('/tenants').then(response => {
             if(response.data.showTenants){
                 setTenantOptions(response.data.tenants);
             }

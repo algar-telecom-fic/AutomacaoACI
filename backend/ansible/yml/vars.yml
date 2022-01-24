@@ -1,3 +1,2 @@
-tenant: ZZ-AUTOMATION-ACI
-vrf: ssssss
-description: sss
+site_id: ss
+sw_id: sss

@@ -17,35 +17,35 @@ export default function CreateTenant() {
                 <div className="card border">
                     <Link style={{textDecoration: "none"}} to="/tenant">
                         <div className="card-body">
-                            <p className="card-text">Create Tenant</p>
+                            <p className="card-title">Create Tenant</p>
                         </div>
                     </Link>
                 </div>  
                 <div className="card mx-sm-2 border">
                     <Link style={{textDecoration: "none"}} to="/vrf">
                         <div className="card-body">
-                            <div className="card-text">Create VRF</div>
+                            <div className="card-title">Create VRF</div>
                         </div>
                     </Link>
                 </div>
                 <div className="card border">
                     <Link style={{textDecoration: "none"}} to="/epg">
                         <div className="card-body">
-                            <div className="card-text">Create EPG</div>
+                            <div className="card-title">Create EPG</div>
                         </div>
                     </Link>
                 </div>
                 <div className="card mx-sm-2 border">
                     <Link style={{textDecoration: "none"}} to="/bd">
                         <div className="card-body">
-                            <div className="card-text">Create BD</div>
+                            <div className="card-title">Create BD</div>
                         </div>
                     </Link>
                 </div>
                 <div className="card border">
                     <Link style={{textDecoration: "none"}} to="/ap">
                         <div className="card-body">
-                            <div className="card-text">Create AP</div>
+                            <div className="card-title">Create AP</div>
                         </div>
                     </Link>
                 </div>
@@ -74,14 +74,21 @@ export default function CreateTenant() {
                         </div>
                     </Link>
                 </div>
-                <div className="card border">
+                <div className="card border me-sm-2">
                     <Link style={{textDecoration: "none"}} to="/swprofile">
                         <div className="card-body">
                             <p className="card-title">Create Switch Profile</p>
                         </div>
                     </Link>
                 </div>
-                
+                <div className="card border">
+                    <Link style={{textDecoration: "none"}} to="/leafprof">
+                        <div className="card-body">
+                            <p className="card-title">Create Leaf Profile</p>
+                        </div>
+                    </Link>
+                </div>
+
             </div>
             <p className="h6 mt-2">Physical Objects</p>
             <div className="card-group mx-auto col-lg-6">

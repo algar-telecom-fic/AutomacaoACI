@@ -26,7 +26,7 @@ const BD = (props) => {
     }, [props.header])
 
     async function getTenantVrf(){
-        await api.get('/vrf').then(response => {
+        await api.get('/tenants').then(response => {
             if(response.data.showTenants){
                 setTenantVrfOptions(response.data.tenants);
             }
@@ -44,8 +44,8 @@ const BD = (props) => {
     }
 
     async function getVrfBd(){
-        await api.get('/bd/vrfs').then(response => {
-            if(response.data.showVrf){
+        await api.get('/vrfs').then(response => {
+            if(response.data.showVrfs){
                 setVrfOptions(response.data.vrfs);
             }
         }).catch(err => {

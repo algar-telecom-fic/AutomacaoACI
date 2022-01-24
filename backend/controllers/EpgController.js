@@ -39,12 +39,8 @@ class EpgController {
     }
   }
 
-  async listBds (request, response) { /* Rota que irá listar os BDs presentes em um tenant */
+  async index (request, response) { /* Rota que irá listar os BDs presentes em um tenant */
     try{
-      await exec(queryBDBash, (err,std) => {
-        console.log(err)
-        console.log( std )
-      })
       const queryvrf = fs.readFileSync('./ansible/querys/aci_bds.json') //le o arquivo
       const queryvrf_vars = JSON.parse(queryvrf)
       var names = [];
@@ -70,41 +66,6 @@ class EpgController {
 
     }catch(err){
       return response.status(400).json({showBd: false, error: err});
-    }
-  }
-
-  async listAps(request, response){
-    try{
-      exec("ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_aps.yml", (err,std) => {
-        console.log(err)
-        console.log(std)
-      })
-      const queryvrf = fs.readFileSync('./ansible/querys/aci_aps.json') //le o arquivo
-      const queryvrf_vars = JSON.parse(queryvrf)
-  
-      var names = [];
-  
-      // variável de controle para não pegar o mesmo id
-      var containerId;
-      for(let i in queryvrf_vars.current[0].fvTenant.children){
-      // atribui o valor de containerId a variável id
-      let id = queryvrf_vars.current[0].fvTenant.children[i].fvAp.attributes.name;
-      // se for diferente, pega o valor de name
-      if(containerId != id){
-        // redefine o valor da variável com o valor atual
-        containerId = id;
-        // adiciona as names à array
-        names.push(queryvrf_vars.current[0].fvTenant.children[i].fvAp.attributes.name);
-        }
-      }
-      const queryvrf_formatted = names.map((c) => ({
-        label: c,
-        value: c,
-      })); //QUERY VRFS ON TENANT FIM
-  
-      return response.status(200).json({showAp: true, aps: queryvrf_formatted});
-    }catch(err){
-      return response.status(400).json({showAp: false, error: err});
     }
   }
 }

@@ -19,6 +19,8 @@ const ComboController = require('./controllers/ComboController');
 
 const SwProfileController = require('./controllers/SwProfileController');
 
+const LeafProfController = require('./controllers/CreateLeafProfController');
+
 const tenantController = new TenantController();
 const epgController = new EpgController();
 const vrfController = new VrfController();
@@ -36,6 +38,8 @@ const comboController = new ComboController();
 
 const swProfileController = new SwProfileController();
 
+const leafProfController = new LeafProfController();
+
 const routes = express.Router()
 
 routes.post('/tenant', tenantController.create);
@@ -43,8 +47,8 @@ routes.post('/vrf', vrfController.create);
 routes.post('/epg', epgController.create)
 routes.post('/bd', bdController.create)
 
-routes.get('/epg/bd', epgController.listBds);
-routes.get('/epg/ap', epgController.listAps);
+routes.get('/epg/bd', epgController.index);
+routes.get('/epg/ap', apController.index);
 
 routes.post('/domain', domainController.create);
 routes.post('/vlanpool', vlanPoolController.create);
@@ -56,14 +60,17 @@ routes.post('/combo/01', comboController.combo01);
 routes.get('/combo/01', comboController.getCombo01);
 
 routes.post('/swprofile', swProfileController.create);
+routes.post('/leafprof', leafProfController.create);
 
-routes.get('/vrf', queryTenant.listTenants);
-routes.get('/ap', queryTenant.listTenants);
-routes.get('/bd', queryTenant.listTenants);
-routes.get('/epg', queryTenant.listTenants);
+// routes.get('/vrf', tenantController.index);
+// routes.get('/ap', tenantController.index);
+// routes.get('/bd', tenantController.index);
+// routes.get('/epg', tenantController.index);
+routes.get('/tenants', tenantController.index);
 
-routes.get('/bd/vrfs', QueryVrf.listvrfs)
-routes.get('/epg/vrfs', QueryVrf.listvrfs)
+// routes.get('/bd/vrfs', QueryVrf.listvrfs)
+// routes.get('/epg/vrfs', QueryVrf.listvrfs)
+routes.get('/vrfs', vrfController.index);
 
 routes.post('/ap', apController.create);
 

@@ -22,7 +22,7 @@ const AP = (props) => {
     }, [props.header])
 
     async function getTenant(){
-        await api.get('/ap').then(response => {
+        await api.get('/tenants').then(response => {
             if(response.data.showTenants){
                 setTenantVrfOptions(response.data.tenants);
             }

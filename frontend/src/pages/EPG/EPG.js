@@ -31,7 +31,7 @@ const EPG = (props) => {
     }, [props.header])
 
     async function getTenantEPG() {
-        await api.get('/epg').then(response => {
+        await api.get('/tenants').then(response => {
             if(response.data.showTenants){
                 setTenantOptions(response.data.tenants);
             }
@@ -49,8 +49,8 @@ const EPG = (props) => {
     }
     
     async function getVrfEPG(){
-        await api.get('/epg/vrfs').then(response =>{
-            if(response.data.showVrf){
+        await api.get('/vrfs').then(response =>{
+            if(response.data.showVrfs){
                 setVrfOptions(response.data.vrfs);
             }
         }).catch(err => {
@@ -58,7 +58,8 @@ const EPG = (props) => {
                 if(err.response.status === 404){
                     alert("VRFs not found!");
                 }else{
-                    alert(String(err.response.data.error))
+                    console.log(err.response.data.error)
+                    alert(err.response.data.error.stdout + "!")
                 }
             }else{
                 alert(String("ERROR!"));

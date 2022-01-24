@@ -18,6 +18,9 @@ import Combo from './pages/Combo/Combo';
 import Combo01 from './pages/Combo/Combo01';
 
 import SwProfile from './pages/SwitchProfile/SwitchProfile';
+import LeafProfile from './pages/LeafProfile/LeafProfile';
+
+import Config from './pages/Config/Config';
 
 import NotFound from './pages/NotFound/NotFound';
 
@@ -41,6 +44,9 @@ export default function Routes() {
                 <Route path="/combo/01" exact component={Combo01} />
                 
                 <Route path="/swprofile" exact component={SwProfile} />
+                <Route path="/leafprof" exact component={LeafProfile} />
+                
+                <Route path="/config" exact component={Config} />
                 
                 <Route path="/404" component={NotFound}/>
                 <Redirect to="/404"/>

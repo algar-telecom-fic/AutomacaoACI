@@ -10,6 +10,7 @@
     "primeicons": "^5.0.0",
     "primereact": "^7.1.0",
     "react": "^16.13.1",
+    "react-cookie": "^4.1.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.2.0",
