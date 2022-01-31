@@ -1,0 +1,26 @@
+---
+- name: Register New Node in the Fabric
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: ./vars.yml
+
+  tasks:
+  - name: Registering Nodes
+    aci_rest:
+      host: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      validate_certs: false
+      method: post
+      path: /api/mo/uni.xml
+      content:
+        <polUni>
+            <ctrlrInst annotation="" dn="uni/controller" name="" nameAlias="" ownerKey="" ownerTag="">
+                <fabricNodeIdentPol annotation="" descr="" dn="" name="default" nameAlias="" ownerKey="" ownerTag="">
+                    <fabricNodeIdentP annotation="" descr="" dn="" extPoolId="0" fabricId="1" name="{{ name }}" nameAlias="" nodeId="{{ node_id }}" nodeType="unspecified" podId="1" role="unspecified" serial="{{ serial }}"/>
+                </fabricNodeIdentPol>
+            </ctrlrInst>
+        </polUni>
+
+

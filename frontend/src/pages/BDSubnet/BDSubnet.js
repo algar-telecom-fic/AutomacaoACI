@@ -22,7 +22,7 @@ const BDSubnet = (props) => {
     }, [props.header])
 
     async function getTenantsVrf(){
-        await api.get('/vrf').then(response => {
+        await api.get('/tenants').then(response => {
             if(response.data.showTenants){
                 setTenantOptions(response.data.tenants);
             }

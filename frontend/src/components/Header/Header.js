@@ -14,6 +14,7 @@ const Header = (props) => {
             label: '',
             icon: 'pi pi-fw pi-arrow-left',
             command: () => {
+                console.log(history)
                 history.goBack();
             },
         },
@@ -48,6 +49,12 @@ const Header = (props) => {
                     label: 'BD',
                     command: () => {
                         history.push('/bd');
+                    }
+                },
+                {
+                    label: 'BD Subnet',
+                    command: () => {
+                        history.push('/bdsubnet');
                     }
                 },
                 {
@@ -100,6 +107,27 @@ const Header = (props) => {
                 history.push('/combo');
             },
         },
+        {
+            label: 'Querys',
+            command: () => {
+                history.push('/update/querys');
+            },
+        },
+        {
+            label: 'About',
+            command: () => {
+                history.push('/about');
+            },
+        },
+    ];
+
+    const items01 = [
+        {
+            label: 'About',
+            command: () => {
+                history.push('/about');
+            },
+        },
     ];
 
     const endMenuBar = <img style={{minWidth: "90px", minHeight: "25px"}} alt="Algar Logo" src={AlgarLogo} height="40"></img>
@@ -107,7 +135,7 @@ const Header = (props) => {
 
     function checkRoute(){
         if(location.pathname === "/"){
-            return "";
+            return items01;
         }else{
             return items;
         }

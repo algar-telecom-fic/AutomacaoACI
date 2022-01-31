@@ -11,7 +11,7 @@
     aci_switch_policy_leaf_profile:
       host: "{{ host }}"
       username: "{{ user }}"
-      password: "{{ pass  }}"
+      password: "{{ pass }}"
       leaf_profile: "n9k-lf1-{{ site_id }}-{{ sw_id }}-SwProf"
       state: query
       validate_certs: false

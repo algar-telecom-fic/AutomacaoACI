@@ -3,15 +3,12 @@ import Header from '../../components/Header/Header';
 import api from '../../services/api';
 import { ProgressBar } from 'primereact/progressbar';
 
-
-import Tenant from '../Tenant/Tenant';
 import AP from '../AP/AP';
 import VRF from '../VRF/VFR';
 import BD from '../BD/BD';
-import BDSubnet from '../BDSubnet/BDSubnet';
 import EPG from '../EPG/EPG';
 
-const Domain = () => {
+const Combo02 = () => {
     const [getComboSize, setComboSize] = useState(0);
     const [getPage, setPage] = useState(1);
     const [getPageProportional, setPageProportional] = useState(0);
@@ -25,7 +22,7 @@ const Domain = () => {
     }, [])
 
     async function getCombosSize(){
-        await api.get('/combo/01').then(response => {
+        await api.get('/combo/02').then(response => {
             if(response.data.combo){
                 setComboSize(response.data.length);
             }
@@ -37,26 +34,29 @@ const Domain = () => {
     
     return (
         <div className="row m-5 pb-5 px-5 bg-light rounded text-center">
-            <Header title="Combo 01"/>
+            <Header title="Combo 02"/>
 
             {getPage === 1
                 ?
-                    <Tenant header={true}/>
+                    <AP header={true}/>
                 : getPage === 2
                     ?
-                        <AP header={true}/>
+                        <VRF header={true}/>
                     : getPage === 3
                         ?  
-                            <VRF header={true}/>
+                            <BD header={true}/>
                         : getPage === 4
-                            ? <BD header={true}/>
+                            ? 
+                                <BD header={true}/>
                             : getPage === 5
-                                ? <BDSubnet header={true}/>
+                                ? 
+                                    <EPG header={true}/>
                                 : getPage === 6
-                                    ? <EPG header={true}/>
+                                    ? 
+                                        <EPG header={true}/>
                                     : 
                                         <>
-                                            <div className="h3">Combo 01 Executed</div>
+                                            <div className="h3">Combo 02 Executed</div>
                                         </>       
             }
             
@@ -89,4 +89,4 @@ const Domain = () => {
     )
 }
 
-export default Domain;
+export default Combo02;

@@ -17,6 +17,8 @@ const Domain = () => {
             console.log(getSelectedCombo)
             if(getSelectedCombo.id === 0){
                 history.push('/combo/01');
+            }else if(getSelectedCombo.id === 1){
+                history.push('/combo/02');
             }
         }else{
             alert("Operation canceled!");
@@ -32,7 +34,7 @@ const Domain = () => {
         {
             "id": 1,
             "name": "Combo 02",
-            "type": "cassasdsa"  
+            "type": "AP, VRF, BD, BD, EPG, EPG"  
         },
     ]
 

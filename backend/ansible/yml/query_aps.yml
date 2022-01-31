@@ -4,7 +4,7 @@
   connection: ssh
   gather_facts: no
   vars_files: 
-    - vars.yml
+    - ./vars.yml
 
   tasks:
   - name: Query APs from ACI
@@ -12,7 +12,7 @@
       host: 10.99.9.1
       username: igorhenrique
       password: ansible123
-      validate_certs: no
+      validate_certs: false
       tenant: "{{ tenant }}"
       state: query
     register: aps

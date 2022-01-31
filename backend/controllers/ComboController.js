@@ -10,6 +10,10 @@ class ComboController {
   async getCombo01(request, response){
     return response.status(200).json({combo: true, length: 6});
   }
+  
+  async getCombo02(request, response){
+    return response.status(200).json({combo: true, length: 6});
+  }
 
   async combo01(request, response){
     try {

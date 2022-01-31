@@ -42,6 +42,13 @@ export default function CreateTenant() {
                         </div>
                     </Link>
                 </div>
+                <div className="card me-sm-2 border">
+                    <Link style={{textDecoration: "none"}} to="/bdsubnet">
+                        <div className="card-body">
+                            <div className="card-title">Create BD Subnet</div>
+                        </div>
+                    </Link>
+                </div>
                 <div className="card border">
                     <Link style={{textDecoration: "none"}} to="/ap">
                         <div className="card-body">
@@ -90,12 +97,19 @@ export default function CreateTenant() {
                 </div>
 
             </div>
-            <p className="h6 mt-2">Physical Objects</p>
+            <p className="h6 mt-2">Extras</p>
             <div className="card-group mx-auto col-lg-6">
                 <div className="card border">
                     <Link style={{textDecoration: "none"}} to="/combo">
                         <div className="card-body">
                             <p className="card-title">COMBO</p>
+                        </div>
+                    </Link>
+                </div>
+                <div className="card border">
+                    <Link style={{textDecoration: "none"}} to="/update/querys">
+                        <div className="card-body">
+                            <p className="card-title">Update Querys</p>
                         </div>
                     </Link>
                 </div>
