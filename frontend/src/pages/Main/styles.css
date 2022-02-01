@@ -1,58 +1,58 @@
 .logon-container {
-    width: 200%;
-    max-width: 1120px;
-    height: 100vh;
-    margin: 0 auto;
+  width: 200%;
+  max-width: 1120px;
+  height: 100vh;
+  margin: 0 auto;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .logo {
-    height: 10%;
-    width: 17%;
+  height: 10%;
+  width: 17%;
 }
 
 .central {
-    background: white;
-    color: #000000;
-    height: 80%;
-    width: 80%;
-    border-radius: 30px;
+  background: white;
+  color: #000000;
+  height: 80%;
+  width: 80%;
+  border-radius: 30px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 h1 {
-    margin: 10px;
+  margin: 10px;
 }
 
-.item{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
-.card{
-    transition: .2s ease;
-    text-decoration: none;
-    background-color: #bfbfbf;
+.card {
+  transition: 0.2s ease;
+  text-decoration: none;
+  background-color: #bfbfbf;
 }
 
-.card-body{
-    color: black;
+.card-body {
+  color: black;
 }
 
-.card:hover{
-    scale: 1.05;
+.card:hover {
+  scale: 1.05;
 }
 
-.card-title{
-    color: inherit;
-    text-decoration: none;
+.card-title {
+  color: inherit;
+  text-decoration: none;
 }
