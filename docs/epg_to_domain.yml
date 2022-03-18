@@ -1,0 +1,26 @@
+---
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: ./vars.yml
+
+  tasks:
+  - name: Query all domain to EPG bindings
+    aci_epg_to_domain:
+      host: 10.99.9.1
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      state: query
+      validate_certs: false
+    delegate_to: localhost
+    register: query_result
+	
+  - copy:
+      content: "{{ query_result }}"
+      dest: epg_to_domain.json
+    delegate_to: localhost
+
+  - debug:
+      msg: "{{ sorted_tenants }}"
+	
+	
