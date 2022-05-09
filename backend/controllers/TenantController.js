@@ -1,40 +1,74 @@
-const express = require("express");
 const fs = require("fs");
 const exec = require("child_process").exec;
 const json2yaml =
-  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+  "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
 const createTenantBash = "./ansible/querys/aci_tenants.json";
 
 class TenantController {
+  /**
+   * /tenant:
+   *   post:
+   *     description: Usada para solicitar a criação de um tenant
+   *     responses:
+   *       '200':
+   *         description: Solicitação feita com sucesso
+   *       '400':
+   *         description: Falha na solicitação
+   */
   async create(request, response) {
     try {
-      const { TenantParam } = request.body;
-      if (TenantParam) {
-        if (!TenantParam.name || !TenantParam.description) {
-          throw "Name or Description on TenantParam does not exists";
-        }
+      const { data } = request.body;
+
+      if (data) {
+        console.log("Parameters were received.");
+
+        if (!data.name) throw "Tenant name is missing.";
+        if (!data.description) throw "Tenant description is missing.";
+
+        console.log("Name and description are ok.");
+
         fs.writeFileSync(
           "./ansible/json/vars.json",
-          JSON.stringify({ tenant: TenantParam.name, description: TenantParam.description }, null, 2)
-        ); //grava o .json recebido do front!
+          JSON.stringify(
+            {
+              tenant: data.name,
+              description: data.description,
+            },
+            null,
+            2
+          )
+        );
 
-        await exec(json2yaml, { cwd: __dirname }, (err, stdout, stderr) => {
-          if (err) {
-            const merged = { err, stdout };
-            response.status(400).json({ createdTenant: false, error: merged });
+        console.log("vars.json file was written");
+
+        await exec(json2yaml, { cwd: __dirname }, (error, stdout, stderr) => {
+          console.log("Entered the command function.");
+
+          if (error) {
+            console.log("errou");
+            return response.status(400).json({ error, stdout, stderr });
           } else {
             runCommand(cmds, cb);
-            return response.status(200).json({ createdTenant: true, statusMessage: "Tenant created successfully" });
+
+            return response.status(201);
           }
         });
-      } else {
-        throw "TenantParam parameter does not exists";
       }
-    } catch (err) {
-      response.status(400).json({ createdTenant: false, error: err });
+    } catch (error) {
+      response.status(400).json({ error });
     }
   }
 
+  /**
+   * /tenant:
+   *   post:
+   *     description: Usada para listar os tenants
+   *     responses:
+   *       '200':
+   *         description: Listagem feita com sucesso
+   *       '400':
+   *         description: Falha na listagem
+   */
   async index(request, response) {
     try {
       const querytenant = fs.readFileSync(createTenantBash); //le o arquivo
@@ -62,35 +96,6 @@ class TenantController {
       return response.status(400).json({ showTenants: false, error: err });
     }
   }
-  // async createTenant(TenantParam){
-  //   try{
-  //     console.log(1)
-  //     console.log(TenantParam)
-  //     console.log(TenantParam.name)
-  //     console.log(TenantParam.description)
-  //     if(TenantParam){
-  //       if(TenantParam.name || TenantParam.description){
-  //         fs.writeFileSync('./ansible/json/vars.json', JSON.stringify({tenant: TenantParam.name, tenant_descr: TenantParam.description}, null, 2)); //grava o .json recebido do front!
-
-  //         await exec(json2yaml, {cwd: __dirname}, (err, stdout, stderr) => {
-  //           if(err){
-  //             throw err;
-  //           }else{
-  //             runCommand(cmds, cb);
-  //           }
-  //           console.log(`stdout: ${stdout}`);
-  //         });
-  //         return "Tenant created successfully";
-  //       }else{
-  //         throw 'Name or Description on TenantParam does not exists';
-  //       }
-  //     }else{
-  //       throw 'TenantParam parameter does not exists';
-  //     }
-  //   }catch(err){
-  //     return err;
-  //   }
-  // }
 }
 
 module.exports = TenantController;
