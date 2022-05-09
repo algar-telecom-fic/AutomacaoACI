@@ -13,7 +13,7 @@
       username: "{{ user }}"
       password: "{{ pass }}"
       tenant: "{{ tenant }}"
-      description: "{{ tenant_descr }}":
+      description: "{{ tenant_descr }}"
       state: present
       validate_certs: false
     register: query_result

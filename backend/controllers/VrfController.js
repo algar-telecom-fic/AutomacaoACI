@@ -5,7 +5,7 @@ const { exec } = require("child_process");
 // const json2yaml = 'json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vrf.yml' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 // const json2yaml = 'json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; cat ../ansible/json/vars.json' //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 const createVFRBash =
-  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vrf.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vrf.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
 const vrfListPath = "./ansible/querys/aci_vrfs.json";
 

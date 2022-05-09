@@ -3,7 +3,7 @@ const fs = require("fs");
 const exec = require("child_process").exec;
 
 const json2yaml =
-  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vlanpool.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vlanpool.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
 class VlanPoolController {
   // async create(request,response) {

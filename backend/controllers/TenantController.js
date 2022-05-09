@@ -1,7 +1,7 @@
 const fs = require("fs");
 const exec = require("child_process").exec;
 const json2yaml =
-  "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
+  "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
 const createTenantBash = "./ansible/querys/aci_tenants.json";
 
 class TenantController {
@@ -18,7 +18,7 @@ class TenantController {
   async create(request, response) {
     try {
       const { data } = request.body;
-
+      
       if (data) {
         console.log("Parameters were received.");
 
@@ -53,6 +53,8 @@ class TenantController {
             return response.status(201);
           }
         });
+      }else{
+        return response.status(400).json({ error: "deu ruim" }) //tratamento para quando nao enviar nada no json
       }
     } catch (error) {
       response.status(400).json({ error });

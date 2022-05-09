@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const exec = require("child_process").exec;
 const createEPGBash =
-  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml ; ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_epg.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_epg.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 const queryBDBash = "ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_bds.yml";
 
 class EpgController {

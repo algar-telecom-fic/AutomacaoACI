@@ -25,7 +25,7 @@ const Tenant = (props) => {
       state,
     };
     await api
-      .post("/tenant", { TenantParam: data })
+      .post("/tenant", { data: data })
       .then((response) => {
         if (response.data.createdTenant) {
           alert(response.data.statusMessage);
