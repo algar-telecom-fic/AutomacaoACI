@@ -1,6 +1,5 @@
 const fs = require("fs");
 const { exec } = require("child_process");
-const createTenantBash = "./ansible/querys/aci_tenants.json";
 
 class TenantController {
   /**
@@ -26,14 +25,7 @@ class TenantController {
        */
       fs.writeFileSync(
         "./ansible/json/vars.json",
-        JSON.stringify(
-          {
-            tenant: data.name,
-            description: data.description,
-          },
-          null,
-          2
-        )
+        JSON.stringify({ tenant: data.name, description: data.description }, null, 2)
       );
 
       const createTenantCommand =
@@ -66,26 +58,27 @@ class TenantController {
    */
   async index(request, response) {
     try {
-      const querytenant = fs.readFileSync(createTenantBash); //le o arquivo
-      const querytenant_vars = JSON.parse(querytenant); //converte o arquivo "bruto" para json
-      var names = [];
+      const querytenant = fs.readFileSync("./ansible/querys/aci_tenants.json"); // Lê o arquivo
+      const querytenant_vars = JSON.parse(querytenant); // Converte o arquivo para JSON
 
-      // variável de controle para não pegar o mesmo id
-      var containerId;
+      var names = [];
+      var containerId; // Variável de controle para não pegar o mesmo ID
+
       for (let i in querytenant_vars) {
-        // atribui o valor de containerId a variável id
-        let id = querytenant_vars[i];
-        // se for diferente, pega o valor de name
+        let id = querytenant_vars[i]; // Atribui o valor de containerId a variável ID
+
+        // Se for diferente pega o valor de name
         if (containerId != id) {
-          // redefine o valor da variável com o valor atual
-          containerId = id;
+          containerId = id; // Redefine o valor da variável com o valor atual
           names.push(querytenant_vars[i].fvTenant.attributes.name);
         }
       }
+
       const formattedTenants = names.map((c) => ({
         label: c,
         value: c,
       }));
+
       return response.status(200).json({ showTenants: true, tenants: formattedTenants });
     } catch (err) {
       return response.status(400).json({ showTenants: false, error: err });
