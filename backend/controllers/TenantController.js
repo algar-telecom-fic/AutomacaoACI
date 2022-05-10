@@ -1,7 +1,5 @@
 const fs = require("fs");
 const { exec } = require("child_process");
-const json2yaml =
-  "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
 const createTenantBash = "./ansible/querys/aci_tenants.json";
 
 class TenantController {
@@ -35,7 +33,10 @@ class TenantController {
         )
       );
 
-      await exec(json2yaml, { cwd: __dirname }, (error, stdout, stderr) => {
+      const createTenantCommand =
+        "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
+
+      await exec(createTenantCommand, { cwd: __dirname }, (error, stdout, stderr) => {
         if (error) return response.status(400).json({ error, stderr });
 
         runCommand(cmds, cb);
