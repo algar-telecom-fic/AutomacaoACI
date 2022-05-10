@@ -1,5 +1,5 @@
 const fs = require("fs");
-const exec = require("child_process").exec;
+const { exec } = require("child_process");
 const json2yaml =
   "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
 const createTenantBash = "./ansible/querys/aci_tenants.json";
@@ -18,44 +18,30 @@ class TenantController {
   async create(request, response) {
     try {
       const { data } = request.body;
-      
-      if (data) {
-        console.log("Parameters were received.");
 
-        if (!data.name) throw "Tenant name is missing.";
-        if (!data.description) throw "Tenant description is missing.";
+      if (!data) throw "Tenant data was not received.";
+      if (!data.name) throw "Tenant name is missing.";
+      if (!data.description) throw "Tenant description is missing.";
 
-        console.log("Name and description are ok.");
+      fs.writeFileSync(
+        "./ansible/json/vars.json",
+        JSON.stringify(
+          {
+            tenant: data.name,
+            description: data.description,
+          },
+          null,
+          2
+        )
+      );
 
-        fs.writeFileSync(
-          "./ansible/json/vars.json",
-          JSON.stringify(
-            {
-              tenant: data.name,
-              description: data.description,
-            },
-            null,
-            2
-          )
-        );
+      await exec(json2yaml, { cwd: __dirname }, (error, stdout, stderr) => {
+        if (error) return response.status(400).json({ error, stderr });
 
-        console.log("vars.json file was written");
+        runCommand(cmds, cb);
 
-        await exec(json2yaml, { cwd: __dirname }, (error, stdout, stderr) => {
-          console.log("Entered the command function.");
-
-          if (error) {
-            console.log("errou");
-            return response.status(400).json({ error, stdout, stderr });
-          } else {
-            runCommand(cmds, cb);
-
-            return response.status(201);
-          }
-        });
-      }else{
-        return response.status(400).json({ error: "deu ruim" }) //tratamento para quando nao enviar nada no json
-      }
+        return response.status(200).json({ stdout });
+      });
     } catch (error) {
       response.status(400).json({ error });
     }
