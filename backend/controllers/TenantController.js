@@ -21,6 +21,9 @@ class TenantController {
       if (!data.name) throw "Tenant name is missing.";
       if (!data.description) throw "Tenant description is missing.";
 
+      /**
+       * Escreve as informações do tenant no arquivo "vars.json"
+       */
       fs.writeFileSync(
         "./ansible/json/vars.json",
         JSON.stringify(
@@ -36,6 +39,9 @@ class TenantController {
       const createTenantCommand =
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
 
+      /**
+       * Executa o comando para criar um tenant na máquina
+       */
       await exec(createTenantCommand, { cwd: __dirname }, (error, stdout, stderr) => {
         if (error) return response.status(400).json({ error, stderr });
 
