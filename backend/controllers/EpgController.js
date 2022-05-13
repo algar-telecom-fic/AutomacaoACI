@@ -25,7 +25,7 @@ class EpgController {
       if (!data.ap) throw "EPG AP is missing.";
 
       /**
-       * Escreve as informações do tenant no arquivo "vars.json"
+       * Escreve as informações do EPG no arquivo "vars.json"
        */
       fs.writeFileSync(
         "./ansible/json/vars.json",
@@ -47,7 +47,7 @@ class EpgController {
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_epg.yml";
 
       /**
-       * Executa o comando para criar um tenant na máquina
+       * Executa o comando para criar um EPG na máquina
        */
       await exec(createEpgCommand, { cwd: __dirname }, (error, stdout, stderr) => {
         if (error) return response.status(400).json({ error, stdout, stderr });

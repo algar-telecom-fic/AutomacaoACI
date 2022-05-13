@@ -3,9 +3,9 @@ const { exec } = require("child_process");
 
 class VRFController {
   /**
-   * /tenants:
+   * /vrfs:
    *   post:
-   *     description: Usada para solicitar a criação de um tenant
+   *     description: Usada para solicitar a criação de uma VRF
    *     responses:
    *       '200':
    *         description: Solicitação feita com sucesso
@@ -22,7 +22,7 @@ class VRFController {
       if (!data.tenant) throw "VRF tenant is missing.";
 
       /**
-       * Escreve as informações do tenant no arquivo "vars.json"
+       * Escreve as informações da VRF no arquivo "vars.json"
        */
       fs.writeFileSync(
         "./ansible/json/vars.json",
@@ -33,7 +33,7 @@ class VRFController {
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vrf.yml";
 
       /**
-       * Executa o comando para criar um tenant na máquina
+       * Executa o comando para criar uma VRF na máquina
        */
       await exec(createVrfCommand, { cwd: __dirname }, (error, stdout, stderr) => {
         if (error) response.status(400).json({ error, stdout, stderr });
@@ -48,9 +48,9 @@ class VRFController {
   }
 
   /**
-   * /tenants:
+   * /vrfs:
    *   get:
-   *     description: Usada para listar os tenants
+   *     description: Usada para listar as VRFs
    *     responses:
    *       '200':
    *         description: Listagem feita com sucesso
