@@ -3,7 +3,7 @@ const { exec } = require("child_process");
 
 class TenantController {
   /**
-   * /tenant:
+   * /tenants:
    *   post:
    *     description: Usada para solicitar a criação de um tenant
    *     responses:
@@ -47,8 +47,8 @@ class TenantController {
   }
 
   /**
-   * /tenant:
-   *   post:
+   * /tenants:
+   *   get:
    *     description: Usada para listar os tenants
    *     responses:
    *       '200':

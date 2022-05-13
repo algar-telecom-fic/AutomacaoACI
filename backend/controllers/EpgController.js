@@ -1,82 +1,100 @@
-const express = require("express");
 const fs = require("fs");
-const exec = require("child_process").exec;
-const createEPGBash =
-  "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_epg.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
-const queryBDBash = "ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_bds.yml";
+const { exec } = require("child_process");
 
 class EpgController {
+  /**
+   * /epgs:
+   *   post:
+   *     description: Usada para solicitar a criação de um EPG
+   *     responses:
+   *       '200':
+   *         description: Solicitação feita com sucesso
+   *       '400':
+   *         description: Falha na solicitação
+   */
   async create(request, response) {
     try {
-      const { EPGParam } = request.body;
-      if (EPGParam) {
-        if (
-          !EPGParam.epgName ||
-          !EPGParam.description ||
-          !EPGParam.tenant ||
-          !EPGParam.vrf ||
-          !EPGParam.bd ||
-          !EPGParam.ap
-        ) {
-          throw "EPG Name, Description, Tenant, VRF, BD or AP on EPGParam does not exists";
-        }
-        fs.writeFileSync(
-          "./ansible/json/vars.json",
-          JSON.stringify(
-            {
-              description: EPGParam.description,
-              tenant: EPGParam.tenant,
-              description: EPGParam.description,
-              ap: EPGParam.ap,
-              epg: EPGParam.epgName,
-              bd: EPGParam.bd,
-            },
-            null,
-            2
-          )
-        ); //grava o .json recebido do front!
+      const { data } = request.body;
 
-        await exec(createEPGBash, { cwd: __dirname }, (err, stdout, stderr) => {
-          if (err) {
-            const merged = { err, stdout };
-            return response.status(400).json({ createdEPG: false, error: merged });
-          } else {
-            runCommand(cmds, cb);
-            return response.status(200).json({ createdEPG: true, statusMessage: "EPG created successfully" });
-          }
-        });
-      } else {
-        throw "EPGParam parameter does not exists";
-      }
-    } catch (err) {
-      return response.status(400).json({ createdEPG: false, error: err });
+      if (!data) throw "EPG data was not received.";
+      if (!data.name) throw "EPG name is missing.";
+      if (!data.description) throw "EPG description is missing.";
+      if (!data.tenant) throw "EPG tenant is missing.";
+      if (!data.vrf) throw "EPG VRF is missing.";
+      if (!data.bd) throw "EPG BD is missing.";
+      if (!data.ap) throw "EPG AP is missing.";
+
+      /**
+       * Escreve as informações do tenant no arquivo "vars.json"
+       */
+      fs.writeFileSync(
+        "./ansible/json/vars.json",
+        JSON.stringify(
+          {
+            description: data.description,
+            tenant: data.tenant,
+            description: data.description,
+            ap: data.ap,
+            epg: data.epgName,
+            bd: data.bd,
+          },
+          null,
+          2
+        )
+      );
+
+      const createEpgCommand =
+        "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_epg.yml";
+
+      /**
+       * Executa o comando para criar um tenant na máquina
+       */
+      await exec(createEpgCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        if (error) return response.status(400).json({ error, stdout, stderr });
+
+        runCommand(cmds, cb);
+
+        return response.status(200).json({ stdout });
+      });
+    } catch (error) {
+      return response.status(400).json({ error });
     }
   }
 
+  /**
+   * /epgs:
+   *   get:
+   *     description: Usada para listar os EPGs
+   *     responses:
+   *       '200':
+   *         description: Listagem feita com sucesso
+   *       '400':
+   *         description: Falha na listagem
+   */
   async index(request, response) {
-    /* Rota que irá listar os BDs presentes em um tenant */
     try {
-      const queryvrf = fs.readFileSync("./ansible/querys/aci_bds.json"); //le o arquivo
+      const queryvrf = fs.readFileSync("./ansible/querys/aci_bds.json");
       const queryvrf_vars = JSON.parse(queryvrf);
+
       var names = [];
 
-      // variável de controle para não pegar o mesmo id
-      let containerId;
+      let containerId; // Variável de controle para não pegar o mesmo ID
+
       for (let i in queryvrf_vars.current[0].fvTenant.children) {
-        // atribui o valor de containerId a variável id
-        let id = queryvrf_vars.current[0].fvTenant.children[i].fvBD.attributes.name;
-        // se for diferente, pega o valor de name
+        let id = queryvrf_vars.current[0].fvTenant.children[i].fvBD.attributes.name; // Atribui o valor de containerId a variável ID
+
+        // Se for diferente pega o valor de name
         if (containerId != id) {
-          // redefine o valor da variável com o valor atual
-          containerId = id;
-          // adiciona as names ao array
+          containerId = id; // Redefine o valor da variável com o valor atual
           names.push(queryvrf_vars.current[0].fvTenant.children[i].fvBD.attributes.name);
         }
       }
+
       const queryvrf_formatted = names.map((c) => ({
         label: c,
         value: c,
-      })); //QUERY VRFS ON TENANT FIM
+      }));
+
       return response.status(200).json({ showBd: true, bds: queryvrf_formatted });
     } catch (err) {
       return response.status(400).json({ showBd: false, error: err });
@@ -85,87 +103,3 @@ class EpgController {
 }
 
 module.exports = EpgController;
-
-// module.exports = {
-
-//     async index (request,response) {
-//       try {
-//         const VrfParm = request.body; //declara que os parametros do tenant são do corpo da requisição
-
-//           fs.writeFileSync('./ansible/json/vars.json', JSON.stringify(VrfParm, undefined, 2)) //grava o .json recebido do front!
-
-//           exec("json2yaml ./ansible/json/vars.json > ./ansible/yml/vars.yml && ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/create_epg.yml", (err,std) => {
-//             return response.json({created: false, error: err});
-//             // console.log(err)
-//             // console.log( std )
-//           })
-//           return response.json({created: true, statusMessage: 'EPG criado com sucesso.'});
-
-//           // return response.json('Todos os dados da VRFa foram atualizados')
-//       } catch (error) {
-//         return response.json({created: false, error})
-
-//       }
-//     },
-
-//     async listbds (request, response) { /* Rota que irá listar os BDs presentes em um tenant */
-//       exec("ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_bds.yml", (err,std) => {
-//         console.log(err)
-//         console.log( std )
-//       })
-//       const queryvrf = fs.readFileSync('./ansible/querys/aci_bds.json') //le o arquivo
-//       const queryvrf_vars = JSON.parse(queryvrf)
-//       var names = [];
-
-//       // variável de controle para não pegar o mesmo id
-//       var containerId;
-//       for(let i in queryvrf_vars.current[0].fvTenant.children){
-//       // atribui o valor de containerId a variável id
-//       let id = queryvrf_vars.current[0].fvTenant.children[i].fvBD.attributes.name;
-//       // se for diferente, pega o valor de name
-//       if(containerId != id){
-//         // redefine o valor da variável com o valor atual
-//         containerId = id;
-//         // adiciona as names à array
-//         names.push(queryvrf_vars.current[0].fvTenant.children[i].fvBD.attributes.name);
-//         }
-//       }
-//       const queryvrf_formatted = names.map((c) => ({
-//         label: c,
-//         value: c,
-//       })); //QUERY VRFS ON TENANT FIM
-//       return response.json(queryvrf_formatted)
-
-//     },
-
-//     async listap (request, response) { /* Rota que irá listar os Ap's presentes em um tenant */
-//       exec("ansible-playbook -i ./ansible/yml/hosts ./ansible/yml/query_aps.yml", (err,std) => {
-//         console.log(err)
-//         console.log(std)
-//       })
-//       const queryvrf = fs.readFileSync('./ansible/querys/aci_aps.json') //le o arquivo
-//       const queryvrf_vars = JSON.parse(queryvrf)
-
-//       var names = [];
-
-//       // variável de controle para não pegar o mesmo id
-//       var containerId;
-//       for(let i in queryvrf_vars.current[0].fvTenant.children){
-//       // atribui o valor de containerId a variável id
-//       let id = queryvrf_vars.current[0].fvTenant.children[i].fvAp.attributes.name;
-//       // se for diferente, pega o valor de name
-//       if(containerId != id){
-//         // redefine o valor da variável com o valor atual
-//         containerId = id;
-//         // adiciona as names à array
-//         names.push(queryvrf_vars.current[0].fvTenant.children[i].fvAp.attributes.name);
-//         }
-//       }
-//       const queryvrf_formatted = names.map((c) => ({
-//         label: c,
-//         value: c,
-//       })); //QUERY VRFS ON TENANT FIM
-
-//       return response.json(queryvrf_formatted)
-//     },
-// }
