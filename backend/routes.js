@@ -1,90 +1,56 @@
 const express = require("express");
-
-const QueryVrf = require("./controllers/QueryVrf");
-
-const QueryTenant = require("./controllers/QuerysTenant");
-
-const TenantController = require("./controllers/TenantController");
-const EpgController = require("./controllers/EpgController");
-const VrfController = require("./controllers/VrfController");
-const ApController = require("./controllers/ApController");
-const BdController = require("./controllers/BdController");
-
-const DomainController = require("./controllers/DomainController");
-const VlanPoolController = require("./controllers/VlanPoolController");
-const AaepController = require("./controllers/AaepController");
-const BdSubnetController = require("./controllers/BdSubnetController");
-
-const ComboController = require("./controllers/ComboController");
-
-const SwProfileController = require("./controllers/SwProfileController");
-
-const LeafProfController = require("./controllers/CreateLeafProfController");
-
-const QueryController = require("./controllers/QueryController.js");
-
-const tenantController = new TenantController();
-const epgController = new EpgController();
-const vrfController = new VrfController();
-const bdController = new BdController();
-const apController = new ApController();
-
-const queryTenant = new QueryTenant();
-
-const domainController = new DomainController();
-const vlanPoolController = new VlanPoolController();
-const aaepController = new AaepController();
-const bdSubnetController = new BdSubnetController();
-
-const comboController = new ComboController();
-
-const swProfileController = new SwProfileController();
-
-const leafProfController = new LeafProfController();
-
-const queryController = new QueryController();
-
 const routes = express.Router();
 
-routes.post("/tenant", tenantController.create);
-routes.post("/vrf", vrfController.create);
-routes.post("/epg", epgController.create);
-routes.post("/bd", bdController.create);
-routes.post("/ap", apController.create);
-
-routes.get("/epg/bd", epgController.index);
-routes.get("/epg/ap", apController.index);
-
-routes.post("/domain", domainController.create);
-routes.post("/vlanpool", vlanPoolController.create);
-routes.post("/aaep", aaepController.create);
-routes.post("/bdsubnet", bdSubnetController.create);
-
-routes.post("/combo/01", comboController.combo01);
-
-routes.get("/combo/01", comboController.getCombo01);
-routes.get("/combo/02", comboController.getCombo02);
-
-routes.post("/swprofile", swProfileController.create);
-routes.post("/leafprof", leafProfController.create);
-
-// routes.get('/vrf', tenantController.index);
-// routes.get('/ap', tenantController.index);
-// routes.get('/bd', tenantController.index);
-// routes.get('/epg', tenantController.index);
+/**
+ * Tenant routes:
+ */
+const TenantController = require("./controllers/TenantController");
+const tenantController = new TenantController();
+routes.post("/tenants", tenantController.create);
 routes.get("/tenants", tenantController.index);
 
-// routes.get('/bd/vrfs', QueryVrf.listvrfs)
-// routes.get('/epg/vrfs', QueryVrf.listvrfs)
+/**
+ * EPG routes:
+ */
+const EpgController = require("./controllers/EpgController");
+const epgController = new EpgController();
+routes.post("/epgs", epgController.create);
+routes.get("/epgs", epgController.index);
+
+/**
+ * VRF routes:
+ */
+const VrfController = require("./controllers/VrfController");
+const vrfController = new VrfController();
+routes.post("/vrfs", vrfController.create);
 routes.get("/vrfs", vrfController.index);
 
-routes.put("/update/query/tenant", queryController.updateTenant);
-routes.put("/update/query/ap", queryController.updateAP);
-routes.put("/update/query/bd", queryController.updateBD);
-routes.put("/update/query/vrf", queryController.updateVRF);
-routes.put("/update/query/swprofile", queryController.updateSW);
+/**
+ * AP routes:
+ */
+const ApController = require("./controllers/ApController");
+const apController = new ApController();
+routes.post("/aps", apController.create);
+routes.get("/aps", apController.index);
 
-// routes.get('/epg/bd', EpgController.listbds)
-// routes.get('/epg/ap', EpgController.listap)
+/**
+ * BD routes:
+ */
+const BdController = require("./controllers/BdController");
+const bdController = new BdController();
+routes.post("/bds", bdController.create);
+
+// routes.get("/epg/bd", epgController.index);
+// routes.get("/epg/ap", apController.index);
+
+// routes.post("/combo/01", comboController.combo01);
+// routes.get("/combo/01", comboController.getCombo01);
+// routes.get("/combo/02", comboController.getCombo02);
+
+// routes.put("/update/query/tenant", queryController.updateTenant);
+// routes.put("/update/query/ap", queryController.updateAP);
+// routes.put("/update/query/bd", queryController.updateBD);
+// routes.put("/update/query/vrf", queryController.updateVRF);
+// routes.put("/update/query/swprofile", queryController.updateSW);
 
 module.exports = routes;

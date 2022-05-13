@@ -22,7 +22,7 @@ class AP {
       if (!data.tenant) throw "AP tenant is missing.";
 
       /**
-       * Escreve as informações do tenant no arquivo "vars.json"
+       * Escreve as informações do AP no arquivo "vars.json"
        */
       fs.writeFileSync("./ansible/json/vars.json", JSON.stringify(data, undefined, 2));
 
@@ -30,7 +30,7 @@ class AP {
         "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_ap.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
       /**
-       * Executa o comando para criar um tenant na máquina
+       * Executa o comando para criar um AP na máquina
        */
       await exec(json2yaml, { cwd: __dirname }, (error, stdout, stderr) => {
         if (error) return response.status(400).json({ error, stdout, stderr });
