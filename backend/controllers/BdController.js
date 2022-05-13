@@ -1,35 +1,46 @@
-const express = require("express");
 const fs = require("fs");
-const exec = require("child_process").exec;
-
-const json2yaml =
-  "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_bd.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+const { exec } = require("child_process");
 
 class BD {
+  /**
+   * /bds:
+   *   post:
+   *     description: Usada para solicitar a criação de um BD
+   *     responses:
+   *       '200':
+   *         description: Solicitação feita com sucesso
+   *       '400':
+   *         description: Falha na solicitação
+   */
   async create(request, response) {
     try {
-      const { BdParam } = request.body; //declara que os parametros do tenant são do corpo da requisição
-      if (BdParam) {
-        if (!BdParam.bd || !BdParam.tenant || !BdParam.vrf) {
-          throw "BD Name, VRF or Tenant on BdParam does not exists";
-        }
-        fs.writeFileSync("./ansible/json/vars.json", JSON.stringify(BdParam, undefined, 2)); //grava o .json recebido do front!
+      const { data } = request.body;
 
-        await exec(json2yaml, { cwd: __dirname }, (err, stdout, stderr) => {
-          if (err) {
-            const merged = { err, stdout };
-            return response.status(400).json({ createdBD: false, error: merged });
-          } else {
-            runCommand(cmds, cb);
-            return response.status(200).json({ createdBD: true, statusMessage: "BD created successfully." });
-          }
-        });
-        // return response.json('Todos os dados da VRFa foram atualizados')
-      } else {
-        throw "BdParam parameter does not exists";
-      }
+      if (!data) throw "BD data was not received.";
+      if (!data.name) throw "BD name is missing.";
+      if (!data.tenant) throw "BD tenant is missing.";
+      if (!data.vrf) throw "BD VRF is missing.";
+
+      /**
+       * Escreve as informações do BD no arquivo "vars.json"
+       */
+      fs.writeFileSync("./ansible/json/vars.json", JSON.stringify(data, undefined, 2));
+
+      const createBdCommand =
+        "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_bd.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+
+      /**
+       * Executa o comando para criar um BD na máquina
+       */
+      await exec(createBdCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        if (error) return response.status(400).json({ error, stdout, stderr });
+
+        runCommand(cmds, cb);
+
+        return response.status(200).json({ stdout });
+      });
     } catch (error) {
-      return response.status(400).json({ createdBD: false, error });
+      return response.status(400).json({ error });
     }
   }
 }
