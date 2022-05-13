@@ -73,8 +73,8 @@ class EpgController {
    */
   async index(request, response) {
     try {
-      const queryvrf = fs.readFileSync("./ansible/querys/aci_bds.json");
-      const queryvrf_vars = JSON.parse(queryvrf);
+      const queryvrf = fs.readFileSync("./ansible/querys/aci_bds.json"); // Lê o arquivo
+      const queryvrf_vars = JSON.parse(queryvrf); // Converte o arquivo para JSON
 
       var names = [];
 
