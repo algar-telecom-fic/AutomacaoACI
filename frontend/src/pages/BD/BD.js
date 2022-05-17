@@ -7,14 +7,10 @@ import Select from "react-select";
 
 const BD = (props) => {
   const [name, setName] = useState("");
-  // const [description, setDescription] = useState('');
-
   const [tenantVrf, setTenantVrf] = useState("");
   const [vrf, setVrf] = useState("");
-
   const [tenantVrfOptions, setTenantVrfOptions] = useState();
   const [vrfOptions, setVrfOptions] = useState();
-
   const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
 
   useEffect(() => {
@@ -66,30 +62,23 @@ const BD = (props) => {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     const data = {
       bd: name,
-      // description,
       tenant: tenantVrf,
       vrf,
     };
+
     await api
-      .post("/bd", { BdParam: data })
-      .then((response) => {
-        if (response.data.createdBD) {
-          alert(response.data.statusMessage);
-        } else {
-          alert(response.data.createdBD);
-        }
-      })
-      .catch((err) => {
-        console.log(err.response.data.error);
-        alert(err.response.data.error.stdout + "!");
-      });
+      .post("/bds", { data })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   return (
     <div className={getStyle}>
-      {props.header ? <div className="h5">BD</div> : <Header title="Create BD" />}
+      <Header title="Create BD" />
+
       <form onSubmit={handleSubmit}>
         <div className="col-md-6 mx-auto">
           <p className="h6">BD Name:</p>
@@ -100,9 +89,6 @@ const BD = (props) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-
-          {/* <p className="h6 mt-2">Description:</p> 
-          <input className="col-sm-12 mx-auto" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)}/> */}
 
           <p className="h6 mt-2">Tenant:</p>
           <Select

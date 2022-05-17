@@ -4,20 +4,22 @@ import api from "../../services/api";
 
 import "./styles.css";
 
-const Tenant = (props) => {
+const Tenant = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [state, setState] = useState("present");
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     const data = {
       name,
       description,
       state,
     };
+
     await api
-      .post("/tenant", { data })
+      .post("/tenants", { data })
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   }

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import "./styles.css";
 import api from "../../services/api";
 import Select from "react-select";
 import Header from "../../components/Header/Header";
+
+import "./styles.css";
 
 const VRF = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [tenant, setTenant] = useState();
   const [tenantOptions, setTenantOptions] = useState();
-
   const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
 
   useEffect(() => {
@@ -22,39 +22,23 @@ const VRF = (props) => {
   async function getTenantVRF() {
     await api
       .get("/tenants")
-      .then((response) => {
-        if (response.data.showTenants) {
-          setTenantOptions(response.data.tenants);
-        }
-      })
-      .catch((err) => {
-        alert(err.response.data.error);
-      });
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     const data = {
       name,
       description,
       tenant,
     };
+
     await api
-      .post("/VRF", { VRFParam: data })
-      .then((response) => {
-        console.log(response);
-        if (response.data.createdVRF) {
-          alert(response.data.statusMessage);
-        } else {
-          alert(response.data.createdVRF);
-        }
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err.response.data.error);
-          alert(err.response.data.error.stdout + "!");
-        }
-      });
+      .post("/vrfs", { data })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   return (
