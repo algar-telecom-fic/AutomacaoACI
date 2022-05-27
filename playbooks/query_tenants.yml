@@ -1,0 +1,29 @@
+---
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  vars_files: ./vars.yml
+
+  tasks:
+  - name: Query tenants from ACI
+    aci_tenant:
+      host: 10.99.9.1
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      state: query
+      validate_certs: false
+    delegate_to: localhost
+    register: tenants
+
+  - name: Sort TENANTs
+    set_fact:
+        sorted_tenants: "{{ tenants.current | sort(attribute='fvTenant.attributes.name') }}"
+
+  - copy:
+      content: "{{ sorted_tenants }}"
+      dest: aci_tenants.json
+    delegate_to: localhost
+
+  - debug:
+      msg: "{{ item.fvTenant.attributes.name }}"
+    loop: "{{ sorted_tenants }}"

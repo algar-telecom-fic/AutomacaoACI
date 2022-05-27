@@ -1,0 +1,13 @@
+---
+host: 10.99.9.1
+user: igorhl
+pass: @#igao123
+tenant: Z_AUTOMACAO
+ap: TESTE_AP100
+description: Web Intranet EPG
+#description-ap: AP Create
+#description-vrf: VRF Create
+#description-bd: BD Create
+bd: TESTE-BD100
+epg: TESTE-EPG100
+vrf: TESTE-VRF100

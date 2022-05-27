@@ -1,0 +1,16 @@
+---
+- hosts: local
+  vars_files:
+    - ./variaveisVars.yml
+  tasks:
+  - name: Add a new Subnet
+    aci_bd_subnet:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      bd: "{{ bd }}"
+      gateway: 10.99.10.4
+      mask: 21
+      scope: public
+      validate_certs: false

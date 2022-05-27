@@ -1,0 +1,52 @@
+---
+- hosts: local
+  vars_files:
+    - ./variaveisVars.yml
+  tasks:
+  - aci_ap:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      validate_certs: no
+      #description: "{{ description-ap }}"
+      state: absent
+      ap: "{{ ap }}"
+
+  - aci_vrf:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      #description: "{{ description-vrf}}"
+      policy_control_preference: enforced
+      policy_control_direction: ingress
+      state: absent
+      validate_certs: no
+      vrf: "{{ vrf }}"
+
+  - aci_bd:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      validate_certs: false
+      #description: "{{ description-bd }}"
+      state: absent
+      tenant: "{{ tenant }}"
+      vrf: "{{ vrf }}"
+      l2_unknown_unicast: flood
+      arp_flooding: true
+      bd: "{{ bd }}"
+
+  - aci_epg:
+      hostname: "{{ host }}"
+      username: "{{ user }}"
+      password: "{{ pass }}"
+      tenant: "{{ tenant }}"
+      ap: "{{ ap }}"
+      description: "{{ description }}"
+      bd: "{{ bd }}"
+      preferred_group: no
+      state: absent
+      validate_certs: no
+      epg: "{{ epg }}"
