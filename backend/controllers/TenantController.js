@@ -80,8 +80,8 @@ class TenantController {
       }));
 
       return response.status(200).json({ showTenants: true, tenants: formattedTenants });
-    } catch (err) {
-      return response.status(400).json({ showTenants: false, error: err });
+    } catch (error) {
+      return response.status(400).json({ showTenants: false, error });
     }
   }
 }

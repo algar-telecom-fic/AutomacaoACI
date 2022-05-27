@@ -3,61 +3,30 @@ import Header from "../../components/Header/Header";
 import api from "../../services/api";
 import Select from "react-select";
 
-// import './styles.css';
-
 const BD = (props) => {
   const [name, setName] = useState("");
   const [tenantVrf, setTenantVrf] = useState("");
   const [vrf, setVrf] = useState("");
   const [tenantVrfOptions, setTenantVrfOptions] = useState();
   const [vrfOptions, setVrfOptions] = useState();
-  const [getStyle, setStyle] = useState("row pb-5 px-5 m-5 bg-light rounded text-center");
 
   useEffect(() => {
-    if (props.header) {
-      setStyle("row pb-5 px-sm-5 m-auto bg-light rounded text-center");
-    }
     getTenantVrf();
     getVrfBd();
-  }, [props.header]);
+  }, []);
 
   async function getTenantVrf() {
     await api
       .get("/tenants")
-      .then((response) => {
-        if (response.data.showTenants) {
-          setTenantVrfOptions(response.data.tenants);
-        }
-      })
-      .catch((err) => {
-        if (err.response) {
-          if (err.response.status === 404) {
-            alert("Tenants not found!");
-          } else {
-            alert(String(err.response.data.error));
-          }
-        } else {
-          alert(String("ERROR!"));
-        }
-      });
+      .then((response) => setTenantVrfOptions(response.data.tenants))
+      .catch((error) => console.log(error));
   }
 
   async function getVrfBd() {
     await api
       .get("/vrfs")
-      .then((response) => {
-        if (response.data.showVrfs) {
-          setVrfOptions(response.data.vrfs);
-        }
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err.response.data.error);
-          alert(err.response.data.error.stdout + "!");
-        } else {
-          alert(String("ERROR!"));
-        }
-      });
+      .then((response) => setVrfOptions(response.data.vrfs))
+      .catch((error) => console.log(error));
   }
 
   async function handleSubmit(event) {
@@ -76,7 +45,7 @@ const BD = (props) => {
   }
 
   return (
-    <div className={getStyle}>
+    <div className="row pb-5 px-5 m-5 bg-light rounded text-center">
       <Header title="Create BD" />
 
       <form onSubmit={handleSubmit}>
