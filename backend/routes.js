@@ -40,6 +40,13 @@ const BdController = require("./controllers/BdController");
 const bdController = new BdController();
 routes.post("/bds", bdController.create);
 
+/**
+ * BD routes:
+ */
+const BdSubnetController = require("./controllers/BdSubnetController");
+const bdSubnetController = new BdSubnetController();
+routes.post("/bdsubnets", bdSubnetController.create);
+
 // routes.get("/epg/bd", epgController.index);
 // routes.get("/epg/ap", apController.index);
 

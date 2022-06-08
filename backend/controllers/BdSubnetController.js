@@ -1,37 +1,53 @@
-const express = require("express");
 const fs = require("fs");
-const exec = require("child_process").exec;
-
-const json2yaml =
-  "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_bd_subnet.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+const { exec } = require("child_process");
 
 class BdSubnetController {
+  /**
+   * /bds:
+   *   post:
+   *     description: Usada para solicitar a criação de um BD
+   *     responses:
+   *       '200':
+   *         description: Solicitação feita com sucesso
+   *       '400':
+   *         description: Falha na solicitação
+   */
   async create(request, response) {
     try {
-      const { tenant, bd, gateway, mask } = request.body;
-      if (tenant && bd && gateway && mask) {
-        fs.writeFileSync(
-          "./ansible/json/vars.json",
-          JSON.stringify({ tenant: tenant, bd: bd, gateway: gateway, mask: mask }, null, 2)
-        ); //grava o .json recebido do front!
+      const { data } = request.body;
 
-        await exec(json2yaml, { cwd: __dirname }, (err, stdout, stderr) => {
-          if (err) {
-            const merged = { err, stdout };
-            return response.status(400).json({ createdBdSubnet: false, error: merged });
-          } else {
-            runCommand(cmds, cb);
-            return response
-              .status(200)
-              .json({ createdBdSubnet: true, statusMessage: "BD Subnet created successfully" });
-          }
-        });
-      } else {
-        throw "Tenant, bd, gateway or mask parameter does not exists";
-      }
-    } catch (err) {
-      console.log(err);
-      response.status(400).json({ createdBdSubnet: false, error: err });
+      console.log(data);
+
+      if (!data) throw "Tenant data was not received.";
+      if (!data.tenant) throw "Tenant is missing.";
+      if (!data.bd) throw "BD is missing.";
+      if (!data.gateway) throw "Gateway is missing.";
+      if (!data.mask) throw "Mask is missing.";
+
+      /**
+       * Escreve as informações do tenant no arquivo "vars.json"
+       */
+      fs.writeFileSync(
+        "./ansible/json/vars.json",
+        JSON.stringify({ tenant: data.tenant, bd: data.bd, gateway: data.gateway, mask: data.mask }, null, 2)
+      );
+
+      console.log("escreu");
+
+      const createBdSubnetCommand =
+        "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_bd_subnet.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
+
+      await exec(createBdSubnetCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        if (error) return response.status(400).json({ error, stderr });
+
+        console.log("entrou");
+
+        runCommand(cmds, cb);
+
+        return response.status(200).json({ stdout });
+      });
+    } catch (error) {
+      response.status(400).json({ error });
     }
   }
 }
