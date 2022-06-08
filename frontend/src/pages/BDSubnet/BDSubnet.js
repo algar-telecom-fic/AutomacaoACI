@@ -24,8 +24,15 @@ const BDSubnet = (props) => {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    const data = {
+      tenant: getTenant,
+      bd: getBD,
+      gateway: getGateway,
+      mask: getMask,
+    };
+
     await api
-      .post("/bdsubnets", { tenant: getTenant, bd: getBD, gateway: getGateway, mask: getMask })
+      .post("/bdsubnets", { data })
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   }
