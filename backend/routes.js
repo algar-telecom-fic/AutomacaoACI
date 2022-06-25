@@ -41,7 +41,7 @@ const bdController = new BdController();
 routes.post("/bds", bdController.create);
 
 /**
- * BD routes:
+ * BD Subnet routes:
  */
 const BdSubnetController = require("./controllers/BdSubnetController");
 const bdSubnetController = new BdSubnetController();
