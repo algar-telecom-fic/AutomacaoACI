@@ -6,17 +6,16 @@
   vars_files: ./vars.yml
 
   tasks:
-
-  - name: Create subnet with private and shared scope
-    aci_bd_subnet:
-      host: "{{ host }}"
-      username: "{{ user }}"
-      password: "{{ pass }}"
-      tenant: "{{ tenant }}"
-      bd: "{{ bd }}"
-      gateway: "{{ subnet }}"
-      mask: "{{ mask }}"
-      scope: [private, shared]
-      #scope: [public, shared]
-      state: present
-      validate_certs: false
+    - name: Create subnet with private and shared scope
+      aci_bd_subnet:
+        host: "{{ host }}"
+        username: testeauto
+        password: testeauto2022
+        tenant: "{{ tenant }}"
+        bd: "{{ bd }}"
+        gateway: "{{ subnet }}"
+        mask: "{{ mask }}"
+        scope: [private, shared]
+        #scope: [public, shared]
+        state: present
+        validate_certs: false

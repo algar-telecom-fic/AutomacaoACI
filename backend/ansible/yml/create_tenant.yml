@@ -6,14 +6,13 @@
   vars_files: ./vars.yml
 
   tasks:
-
-  - name: Create a Tenant
-    aci_tenant:
-      host: "{{ host }}"
-      username: "{{ user }}"
-      password: "{{ pass }}"
-      tenant: "{{ tenant }}"
-      description: "{{ tenant_descr }}"
-      state: present
-      validate_certs: false
-    register: query_result
+    - name: Create a Tenant
+      aci_tenant:
+        host: "{{ host }}"
+        username: testeauto
+        password: testeauto2022
+        tenant: "{{ tenant }}"
+        description: "{{ tenant_descr }}"
+        state: present
+        validate_certs: false
+      register: query_result

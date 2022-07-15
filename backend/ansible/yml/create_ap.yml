@@ -3,19 +3,18 @@
   hosts: all
   connection: ssh
   gather_facts: no
-  vars_files: 
+  vars_files:
     - vars.yml
 
   tasks:
-
-  - name: Create an Application Profile
-    aci_ap:
-      host: 10.99.9.1
-      username: igorhenrique
-      password: ansible123
-      tenant: "{{ tenant }}"
-      ap: "{{ ap }}"
-      description: "{{ description }}"
-      state: present
-      validate_certs: false
-    register: query_result
+    - name: Create an Application Profile
+      aci_ap:
+        host: 10.99.9.1
+        username: testeauto
+        password: testeauto2022
+        tenant: "{{ tenant }}"
+        ap: "{{ ap }}"
+        description: "{{ description }}"
+        state: present
+        validate_certs: false
+      register: query_result

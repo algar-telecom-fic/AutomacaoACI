@@ -3,22 +3,21 @@
   hosts: all
   connection: ssh
   gather_facts: no
-  vars_files: 
+  vars_files:
     - vars.yml
 
   tasks:
-
-  - name: Create an EPG
-    aci_epg:
-      host: 10.99.9.1
-      username: igorhenrique
-      password: ansible123
-      tenant: "{{ tenant }}"
-      description: "{{ description }}"
-      ap: "{{ ap }}"
-      epg: "{{ epg }}"
-      bd: "{{ bd }}"
-      preferred_group: yes
-      state: present
-      validate_certs: false
-    delegate_to: localhost
+    - name: Create an EPG
+      aci_epg:
+        host: 10.99.9.1
+        username: testeauto
+        password: testeauto2022
+        tenant: "{{ tenant }}"
+        description: "{{ description }}"
+        ap: "{{ ap }}"
+        epg: "{{ epg }}"
+        bd: "{{ bd }}"
+        preferred_group: yes
+        state: present
+        validate_certs: false
+      delegate_to: localhost
