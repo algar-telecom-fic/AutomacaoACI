@@ -1,9 +1,9 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon src/server.js --ignore 'ansible'"
+    "dev": "nodemon server.js --ignore 'ansible'"
   },
   "license": "ISC",
   "dependencies": {
