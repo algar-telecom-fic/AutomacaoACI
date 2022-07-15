@@ -20,6 +20,8 @@ class TenantController {
       if (!data.name) throw "Tenant name is missing.";
       if (!data.description) throw "Tenant description is missing.";
 
+      console.log("Data was received successfully.");
+
       /**
        * Escreve as informações do tenant no arquivo "vars.json"
        */
@@ -28,6 +30,8 @@ class TenantController {
         JSON.stringify({ tenant: data.name, description: data.description }, null, 2)
       );
 
+      console.log("Vars file was filled.");
+
       const createTenantCommand =
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_tenant.yml";
 
@@ -35,9 +39,13 @@ class TenantController {
        * Executa o comando para criar um tenant na máquina
        */
       await exec(createTenantCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        console.log("Entered the run function.");
+
         if (error) return response.status(400).json({ error, stderr });
 
         runCommand(cmds, cb);
+
+        console.log("Run function was executed.", stdout);
 
         return response.status(200).json({ stdout });
       });

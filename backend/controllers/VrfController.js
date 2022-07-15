@@ -21,6 +21,8 @@ class VRFController {
       if (!data.description) throw "VRF description is missing.";
       if (!data.tenant) throw "VRF tenant is missing.";
 
+      console.log("Data was received successfully.");
+
       /**
        * Escreve as informações da VRF no arquivo "vars.json"
        */
@@ -29,6 +31,8 @@ class VRFController {
         JSON.stringify({ vrf: data.name, description: data.description, tenant: data.tenant }, null, 2)
       );
 
+      console.log("Vars file was filled.");
+
       const createVrfCommand =
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_vrf.yml";
 
@@ -36,9 +40,13 @@ class VRFController {
        * Executa o comando para criar uma VRF na máquina
        */
       await exec(createVrfCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        console.log("Entered the run function.");
+
         if (error) response.status(400).json({ error, stdout, stderr });
 
         runCommand(cmds, cb);
+
+        console.log("Run function was executed.", stdout);
 
         return response.status(200).json({ stdout });
       });

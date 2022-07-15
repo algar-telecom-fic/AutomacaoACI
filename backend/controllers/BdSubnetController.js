@@ -22,6 +22,8 @@ class BdSubnetController {
       if (!data.gateway) throw "Gateway is missing.";
       if (!data.mask) throw "Mask is missing.";
 
+      console.log("Data was received successfully.");
+
       /**
        * Escreve as informações do tenant no arquivo "vars.json"
        */
@@ -30,13 +32,19 @@ class BdSubnetController {
         JSON.stringify({ tenant: data.tenant, bd: data.bd, gateway: data.gateway, mask: data.mask }, null, 2)
       );
 
+      console.log("Vars file was filled.");
+
       const createBdSubnetCommand =
         "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_bd_subnet.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
 
       await exec(createBdSubnetCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        console.log("Entered the run function.");
+
         if (error) return response.status(400).json({ error, stderr });
 
         runCommand(cmds, cb);
+
+        console.log("Run function was executed.", stdout);
 
         return response.status(200).json({ stdout });
       });

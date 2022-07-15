@@ -21,10 +21,14 @@ class AP {
       if (!data.description) throw "AP description is missing.";
       if (!data.tenant) throw "AP tenant is missing.";
 
+      console.log("Data was received successfully.");
+
       /**
        * Escreve as informações do AP no arquivo "vars.json"
        */
       fs.writeFileSync("./ansible/json/vars.json", JSON.stringify(data, undefined, 2));
+
+      console.log("Vars file was filled.");
 
       const json2yaml =
         "json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_ap.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
@@ -33,9 +37,13 @@ class AP {
        * Executa o comando para criar um AP na máquina
        */
       await exec(json2yaml, { cwd: __dirname }, (error, stdout, stderr) => {
+        console.log("Entered the run function.");
+
         if (error) return response.status(400).json({ error, stdout, stderr });
 
         runCommand(cmds, cb);
+
+        console.log("Run function was executed.", stdout);
 
         return response.status(200).json({ stdout });
       });

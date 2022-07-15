@@ -24,6 +24,8 @@ class EpgController {
       if (!data.bd) throw "EPG BD is missing.";
       if (!data.ap) throw "EPG AP is missing.";
 
+      console.log("Data was received successfully.");
+
       /**
        * Escreve as informações do EPG no arquivo "vars.json"
        */
@@ -43,6 +45,8 @@ class EpgController {
         )
       );
 
+      console.log("Vars file was filled.");
+
       const createEpgCommand =
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_epg.yml";
 
@@ -50,9 +54,13 @@ class EpgController {
        * Executa o comando para criar um EPG na máquina
        */
       await exec(createEpgCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        console.log("Entered the run function.");
+
         if (error) return response.status(400).json({ error, stdout, stderr });
 
         runCommand(cmds, cb);
+
+        console.log("Run function was executed.", stdout);
 
         return response.status(200).json({ stdout });
       });

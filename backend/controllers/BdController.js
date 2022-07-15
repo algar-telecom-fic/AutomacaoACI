@@ -21,10 +21,14 @@ class BD {
       if (!data.tenant) throw "BD tenant is missing.";
       if (!data.vrf) throw "BD VRF is missing.";
 
+      console.log("Data was received successfully.");
+
       /**
        * Escreve as informações do BD no arquivo "vars.json"
        */
       fs.writeFileSync("./ansible/json/vars.json", JSON.stringify(data, undefined, 2));
+
+      console.log("Vars file was filled.");
 
       const createBdCommand =
         "sudo json2yaml ../ansible/json/vars.json > ../ansible/yml/vars.yml && ansible-playbook -i ../ansible/yml/hosts ../ansible/yml/create_bd.yml"; //converte JSON->YAML & EXECUTA COMANDO ANSIBLE
@@ -33,9 +37,13 @@ class BD {
        * Executa o comando para criar um BD na máquina
        */
       await exec(createBdCommand, { cwd: __dirname }, (error, stdout, stderr) => {
+        console.log("Entered the run function.");
+
         if (error) return response.status(400).json({ error, stdout, stderr });
 
         runCommand(cmds, cb);
+
+        console.log("Run function was executed.", stdout);
 
         return response.status(200).json({ stdout });
       });
