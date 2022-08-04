@@ -26,7 +26,10 @@ class AP {
       /**
        * Escreve as informações do AP no arquivo "vars.json"
        */
-      fs.writeFileSync("./ansible/json/vars.json", JSON.stringify(data, undefined, 2));
+      fs.writeFileSync(
+        "./ansible/json/vars.json",
+        JSON.stringify({ ap: data.name, description: data.description, tenant: data.tenant }, undefined, 2)
+      );
 
       console.log("Vars file was filled.");
 
